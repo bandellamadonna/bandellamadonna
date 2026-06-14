@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bandellamadonna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f0;
+      --gray: #999;
+      --accent: #f5f5f0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-logo {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(255,255,255,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      width: min(280px, 60vw);
+      margin-bottom: 2.5rem;
+      filter: invert(0);
+      animation: floatIn 1s ease both;
+    }
+
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-title {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 7rem);
+      letter-spacing: -0.01em;
+      line-height: 0.95;
+      text-transform: uppercase;
+      animation: floatIn 1s 0.15s ease both;
+    }
+
+    .hero-sub {
+      margin-top: 1.2rem;
+      font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray);
+      animation: floatIn 1s 0.3s ease both;
+    }
+
+    .hero-bio {
+      max-width: 560px;
+      margin: 2.5rem auto 0;
+      font-size: clamp(0.9rem, 1.8vw, 1rem);
+      line-height: 1.75;
+      color: rgba(245,245,240,0.75);
+      animation: floatIn 1s 0.45s ease both;
+    }
+
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: floatIn 1s 0.6s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.8rem;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    .btn-primary {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: rgba(245,245,240,0.85);
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent);
+      margin: 0 auto;
+    }
+
+    /* SECTION */
+    section {
+      padding: 6rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* BAND MEMBERS */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .member {
+      background: var(--black);
+      padding: 1.8rem 1.5rem;
+      transition: background 0.2s;
+    }
+
+    .member:hover { background: rgba(255,255,255,0.04); }
+
+    .member-name {
+      font-family: 'Black Han Sans', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+
+    .member-role {
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* SOCIAL */
+    .social-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 2rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 100%;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { gap: 1.2rem; }
+      section { padding: 4rem 1.2rem; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">BDM</a>
+    <ul class="nav-links">
+      <li><a href="#chi-siamo">La Band</a></li>
+      <li><a href="#eventi">Eventi</a></li>
+      <li><a href="#contatti">Contatti</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <img src="Logo_BDM_transparent.png" alt="Bandellamadonna logo" class="hero-logo" />
+    <h1 class="hero-title">Bandella<br>madonna</h1>
+    <p class="hero-sub">Ska · Punk · Milano</p>
+    <p class="hero-bio">
+      Nati nel 2022 come regalo di matrimonio, non riuscirono a smettere. Da Milano all'Abruzzo passando per Trieste, sei pazzi che infiammano i palchi italiani con cover Ska di pezzi storici e intermezzi rinascimentali. Stare fermi sarà impossibile.
+    </p>
+    <div class="hero-cta">
+      <a href="#eventi" class="btn btn-primary">Prossimi eventi</a>
+      <a href="https://www.instagram.com/bandellamadonna?igsh=MTBsdGwyamllaXJ0Zw==" target="_blank" class="btn">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=61578020600803" target="_blank" class="btn">Facebook</a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CHI SIAMO -->
+  <section id="chi-siamo">
+    <p class="section-label">La Band</p>
+    <div class="members-grid">
+      <div class="member">
+        <p class="member-name">Mirco Patriarca</p>
+        <p class="member-role">Tromba</p>
+      </div>
+      <div class="member">
+        <p class="member-name">Fabio Patriarca</p>
+        <p class="member-role">Voce / Frontman</p>
+      </div>
+      <div class="member">
+        <p class="member-name">Pier Francesco Piazza</p>
+        <p class="member-role">Basso</p>
+      </div>
+      <div class="member">
+        <p class="member-name">Lorenzo Recchilungo</p>
+        <p class="member-role">Chitarra</p>
+      </div>
+      <div class="member">
+        <p class="member-name">Lorenzo Di Pietro</p>
+        <p class="member-role">Sax</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- EVENTI -->
+  <section id="eventi">
+    <p class="section-label">Eventi</p>
+    <p style="color: var(--gray); font-size: 0.95rem; line-height: 1.7;">
+      Prossimi concerti in arrivo. Seguici su Instagram e Facebook per non perdere le date.
+    </p>
+    <div style="margin-top: 2rem;">
+      <a href="https://www.instagram.com/bandellamadonna?igsh=MTBsdGwyamllaXJ0Zw==" target="_blank" class="btn">Seguici su Instagram</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTATTI -->
+  <section id="contatti">
+    <p class="section-label">Contatti</p>
+    <p style="color: rgba(245,245,240,0.75); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem;">
+      Per booking, collaborazioni o semplicemente per dirci che vi piace quello che facciamo.
+    </p>
+    <div class="social-row">
+      <a href="https://www.instagram.com/bandellamadonna?igsh=MTBsdGwyamllaXJ0Zw==" target="_blank" class="btn">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=61578020600803" target="_blank" class="btn">Facebook</a>
+      <a href="mailto:bandellamadonna@gmail.com" class="btn">Email</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Bandellamadonna</p>
+    <p>Milano · Italy</p>
+  </footer>
+
+</body>
+</html>
