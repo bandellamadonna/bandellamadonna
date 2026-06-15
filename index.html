@@ -126,7 +126,7 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      padding: 6rem 2rem 2rem;
+      padding: 0 2rem;
       animation: fadeUp 0.8s ease both;
     }
 
@@ -184,7 +184,7 @@
 
     /* ── EVENTI ── */
     .event-card {
-      padding: 1.6rem 0;
+      padding: 1.6rem 1rem;
       display: flex;
       gap: 2rem;
       align-items: center;
@@ -193,6 +193,19 @@
     }
 
     .event-card:first-of-type { border-top: 1px solid rgba(255,255,255,0.08); }
+
+    .event-card.futuro {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .event-card.futuro .event-date { color: var(--off-white); }
+    .event-card.futuro .event-date span { color: var(--gray); }
+    .event-card.futuro .event-info h3 { color: var(--off-white); }
+    .event-card.futuro .event-info p { color: var(--gray); }
+
+    .event-card:not(.futuro) .event-date { color: var(--gray); }
+    .event-card:not(.futuro) .event-info h3 { color: var(--gray); }
+    .event-card:not(.futuro) .event-info p { color: #555; }
 
     .event-date {
       font-family: 'Bebas Neue', sans-serif;
@@ -444,7 +457,10 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
-      .hero-content { padding-top: 3rem; }
+      .hero-content {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
       .hero-banner { width: 88vw; }
       .sec-inner { padding: 3.5rem 1.2rem; }
       .members-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
@@ -583,8 +599,7 @@
     <div class="sec-inner">
       <p class="section-label">Eventi</p>
 
-      <div class="event-card">
-        <div class="event-date">12<span>Ago 2026</span></div>
+      <div class="event-card futuro">
         <div class="event-info">
           <h3>Live @ Basciano / Tomolati</h3>
           <p>Teramo, Abruzzo</p>
