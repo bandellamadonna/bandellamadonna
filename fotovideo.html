@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foto & Video — Bandellamadonna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0d0d0d;
+      --off-white: #f0f0ee;
+      --gray: #888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      background: var(--black);
+      color: var(--off-white);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url('images/foto_sfondo_home.jpg') center center / cover no-repeat;
+      opacity: 0.18;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 2.5rem;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.15em;
+      color: var(--off-white);
+      text-decoration: none;
+      z-index: 101;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--off-white); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 101;
+    }
+
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--off-white); transition: all 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(13,13,13,0.98);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 2.5rem;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      color: var(--off-white);
+      text-decoration: none;
+      font-size: 1.8rem;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 680px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      nav { padding: 1rem 1.4rem; }
+    }
+
+    /* ── MAIN ── */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 8rem 2rem 5rem;
+    }
+
+    .page-title {
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .page-title::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ── EVENTO BLOCK ── */
+    .fv-evento {
+      margin-bottom: 0;
+      scroll-margin-top: 90px;
+    }
+
+    .fv-header { margin-bottom: 1.5rem; }
+
+    .fv-data {
+      font-size: 0.62rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gray);
+      margin-bottom: 0.3rem;
+    }
+
+    .fv-titolo { font-weight: 700; font-size: 1.4rem; margin-bottom: 0.2rem; }
+
+    .fv-luogo { font-size: 0.8rem; color: var(--gray); }
+
+    /* ── GRIGLIA FOTO ── */
+    .fv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .fv-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      filter: grayscale(60%);
+      display: block;
+      cursor: pointer;
+      transition: filter 0.3s, transform 0.3s;
+    }
+
+    .fv-img:hover { filter: grayscale(0%); transform: scale(1.02); }
+
+    .fv-sep {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 3.5rem 0;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-img {
+      max-width: 92vw;
+      max-height: 92vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.2rem; right: 1.5rem;
+      background: none; border: none;
+      color: var(--off-white); font-size: 2rem;
+      cursor: pointer; line-height: 1; z-index: 201;
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: none; border: none;
+      color: var(--off-white); font-size: 2.5rem;
+      cursor: pointer; padding: 1rem;
+      z-index: 201; line-height: 1;
+      opacity: 0.6; transition: opacity 0.2s;
+    }
+
+    .lightbox-prev:hover, .lightbox-next:hover { opacity: 1; }
+    .lightbox-prev { left: 0.5rem; }
+    .lightbox-next { right: 0.5rem; }
+
+    .lightbox-counter {
+      position: absolute;
+      bottom: 1.2rem; left: 50%; transform: translateX(-50%);
+      font-size: 0.72rem; letter-spacing: 0.15em;
+      color: var(--gray);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      main { padding: 7rem 1.2rem 4rem; }
+      .fv-grid { grid-template-columns: repeat(2, 1fr); gap: 0.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">BDM</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#band">La Band</a></li>
+      <li><a href="index.html#eventi">Eventi</a></li>
+      <li><a href="fotovideo.html" class="active">Foto & Video</a></li>
+      <li><a href="index.html#merch">Merch</a></li>
+      <li><a href="index.html#contatti">Contatti</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="closeMenu()">Home</a>
+    <a href="index.html#band" onclick="closeMenu()">La Band</a>
+    <a href="index.html#eventi" onclick="closeMenu()">Eventi</a>
+    <a href="fotovideo.html" onclick="closeMenu()">Foto & Video</a>
+    <a href="index.html#merch" onclick="closeMenu()">Merch</a>
+    <a href="index.html#contatti" onclick="closeMenu()">Contatti</a>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+    <button class="lightbox-prev" onclick="lightboxNav(-1)">‹</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+    <button class="lightbox-next" onclick="lightboxNav(1)">›</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </div>
+
+  <main>
+    <p class="page-title">Foto & Video</p>
+
+    <!-- Evento 5 — C.I.Q. -->
+    <div class="fv-evento" id="evento-5">
+      <div class="fv-header">
+        <p class="fv-data">25 Ott 2025</p>
+        <h2 class="fv-titolo">Live @ C.I.Q.</h2>
+        <p class="fv-luogo">Milano, Lombardia</p>
+      </div>
+      <div class="fv-grid" data-event="5">
+        <img src="images/events/evento_5_1.jpg" class="fv-img" alt="Foto 1" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_5_2.jpg" class="fv-img" alt="Foto 2" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_5_3.jpg" class="fv-img" alt="Foto 3" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_5_4.jpg" class="fv-img" alt="Foto 4" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_5_5.jpg" class="fv-img" alt="Foto 5" onerror="this.style.display='none'" onclick="openLightbox(this)">
+      </div>
+    </div>
+
+    <div class="fv-sep"></div>
+
+    <!-- Evento 4 — Spazioparco -->
+    <div class="fv-evento" id="evento-4">
+      <div class="fv-header">
+        <p class="fv-data">21 Dic 2024</p>
+        <h2 class="fv-titolo">Live @ Spazioparco</h2>
+        <p class="fv-luogo">Milano, Lombardia</p>
+      </div>
+      <div class="fv-grid" data-event="4">
+        <img src="images/events/evento_4_1.jpg" class="fv-img" alt="Foto 1" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_4_2.jpg" class="fv-img" alt="Foto 2" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_4_3.jpg" class="fv-img" alt="Foto 3" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_4_4.jpg" class="fv-img" alt="Foto 4" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_4_5.jpg" class="fv-img" alt="Foto 5" onerror="this.style.display='none'" onclick="openLightbox(this)">
+      </div>
+    </div>
+
+    <div class="fv-sep"></div>
+
+    <!-- Evento 3 — Barrio's -->
+    <div class="fv-evento" id="evento-3">
+      <div class="fv-header">
+        <p class="fv-data">30 Nov 2024</p>
+        <h2 class="fv-titolo">Live @ Barrio's</h2>
+        <p class="fv-luogo">Milano, Lombardia</p>
+      </div>
+      <div class="fv-grid" data-event="3">
+        <img src="images/events/evento_3_1.jpg" class="fv-img" alt="Foto 1" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_3_2.jpg" class="fv-img" alt="Foto 2" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_3_3.jpg" class="fv-img" alt="Foto 3" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_3_4.jpg" class="fv-img" alt="Foto 4" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_3_5.jpg" class="fv-img" alt="Foto 5" onerror="this.style.display='none'" onclick="openLightbox(this)">
+      </div>
+    </div>
+
+    <div class="fv-sep"></div>
+
+    <!-- Evento 2 — Privato -->
+    <div class="fv-evento" id="evento-2">
+      <div class="fv-header">
+        <p class="fv-data">7 Ott 2023</p>
+        <h2 class="fv-titolo">Evento Privato</h2>
+        <p class="fv-luogo">Teramo, Abruzzo</p>
+      </div>
+      <div class="fv-grid" data-event="2">
+        <img src="images/events/evento_2_1.jpg" class="fv-img" alt="Foto 1" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_2_2.jpg" class="fv-img" alt="Foto 2" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_2_3.jpg" class="fv-img" alt="Foto 3" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_2_4.jpg" class="fv-img" alt="Foto 4" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_2_5.jpg" class="fv-img" alt="Foto 5" onerror="this.style.display='none'" onclick="openLightbox(this)">
+      </div>
+    </div>
+
+    <div class="fv-sep"></div>
+
+    <!-- Evento 1 — Privato -->
+    <div class="fv-evento" id="evento-1">
+      <div class="fv-header">
+        <p class="fv-data">30 Lug 2022</p>
+        <h2 class="fv-titolo">Evento Privato</h2>
+        <p class="fv-luogo">Teramo, Abruzzo</p>
+      </div>
+      <div class="fv-grid" data-event="1">
+        <img src="images/events/evento_1_1.jpg" class="fv-img" alt="Foto 1" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_1_2.jpg" class="fv-img" alt="Foto 2" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_1_3.jpg" class="fv-img" alt="Foto 3" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_1_4.jpg" class="fv-img" alt="Foto 4" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_1_5.jpg" class="fv-img" alt="Foto 5" onerror="this.style.display='none'" onclick="openLightbox(this)">
+      </div>
+    </div>
+
+  </main>
+
+  <footer style="position:relative;z-index:1;border-top:1px solid rgba(255,255,255,0.06);padding:1.8rem 2.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+    <p style="font-size:0.72rem;color:#555;">© 2025 Bandellamadonna</p>
+    <p style="font-size:0.72rem;color:#555;">Milano · Italy</p>
+  </footer>
+
+  <script>
+    // NAV hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // LIGHTBOX
+    let currentImgs = [];
+    let currentIdx = 0;
+
+    function openLightbox(imgEl) {
+      const grid = imgEl.closest('.fv-grid');
+      currentImgs = Array.from(grid.querySelectorAll('.fv-img')).filter(i => i.style.display !== 'none' && i.complete && i.naturalWidth > 0);
+      currentIdx = currentImgs.indexOf(imgEl);
+      showLightboxImg();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function showLightboxImg() {
+      const img = currentImgs[currentIdx];
+      document.getElementById('lightboxImg').src = img.src;
+      document.getElementById('lightboxCounter').textContent = (currentIdx + 1) + ' / ' + currentImgs.length;
+    }
+
+    function lightboxNav(dir) {
+      currentIdx = (currentIdx + dir + currentImgs.length) % currentImgs.length;
+      showLightboxImg();
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lightboxNav(-1);
+      if (e.key === 'ArrowRight') lightboxNav(1);
+    });
+
+    // Scroll to anchor on load
+    window.addEventListener('load', () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const el = document.querySelector(hash);
+        if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+      }
+    });
+  </script>
+
+</body>
+</html>
