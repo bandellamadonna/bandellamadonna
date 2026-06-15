@@ -11,12 +11,29 @@
     :root {
       --black: #0d0d0d;
       --white: #ffffff;
-      --gray-dark: #444;
-      --gray-light: #aaa;
+      --off-white: #f0f0ee;
+      --gray: #888;
     }
 
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      background: var(--black);
+      color: var(--off-white);
+    }
+
+    /* ── SFONDO GLOBALE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url('images/foto_sfondo_home.jpg') center center / cover no-repeat;
+      opacity: 0.18;
+      z-index: 0;
+      pointer-events: none;
+    }
 
     /* ── NAV ── */
     nav {
@@ -27,16 +44,16 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.1rem 2.5rem;
-      background: rgba(13,13,13,0.95);
+      background: rgba(13,13,13,0.92);
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.3rem;
       letter-spacing: 0.15em;
-      color: #fff;
+      color: var(--off-white);
       text-decoration: none;
       z-index: 101;
     }
@@ -48,7 +65,7 @@
     }
 
     .nav-links a {
-      color: #888;
+      color: var(--gray);
       text-decoration: none;
       font-size: 0.78rem;
       letter-spacing: 0.12em;
@@ -56,7 +73,7 @@
       transition: color 0.2s;
     }
 
-    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover { color: var(--off-white); }
 
     .hamburger {
       display: none;
@@ -64,14 +81,13 @@
       gap: 5px;
       cursor: pointer;
       z-index: 101;
-      padding: 4px;
     }
 
     .hamburger span {
       display: block;
       width: 24px;
       height: 2px;
-      background: #fff;
+      background: var(--off-white);
       transition: all 0.3s;
     }
 
@@ -94,7 +110,7 @@
     .mobile-menu.open { display: flex; }
 
     .mobile-menu a {
-      color: #fff;
+      color: var(--off-white);
       text-decoration: none;
       font-size: 1.8rem;
       font-family: 'Bebas Neue', sans-serif;
@@ -108,9 +124,10 @@
       nav { padding: 1rem 1.4rem; }
     }
 
-    /* ── SEZIONI ALTERNATE ── */
+    /* ── SEZIONI ── */
     .sec {
-      width: 100%;
+      position: relative;
+      z-index: 1;
     }
 
     .sec-inner {
@@ -119,73 +136,40 @@
       padding: 5rem 2rem;
     }
 
-    /* Bianco */
-    .sec-white {
-      background: var(--white);
-      color: var(--black);
-    }
-
-    /* Nero */
-    .sec-black {
-      background: var(--black);
-      color: var(--white);
-    }
-
-    /* ── HERO (bianco con sfondo foto) ── */
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: url('images/foto_sfondo_home.jpg') center center / cover no-repeat;
       position: relative;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.55);
-      pointer-events: none;
+      z-index: 1;
     }
 
     .hero-content {
-      position: relative;
-      z-index: 1;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      gap: 1.6rem;
-      text-align: center;
+      justify-content: center;
+      gap: 3rem;
+      padding: 6rem 2rem 2rem;
       animation: fadeUp 0.8s ease both;
     }
 
-    .hero-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
-      letter-spacing: 0.04em;
-      color: #ffffff;
+    .hero-sticker {
+      height: min(55vh, 420px);
+      width: auto;
+      display: block;
+      flex-shrink: 0;
     }
 
-    .hero-sub {
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-    }
-
-    .hero-logo-box {
-      background: var(--white);
-      padding: 1.2rem;
-      width: min(240px, 56vw);
-      line-height: 0;
-    }
-
-    .hero-logo-box img {
-      width: 100%;
+    .hero-banner {
+      width: min(55vw, 600px);
+      height: auto;
       display: block;
     }
+
+    @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
@@ -195,23 +179,19 @@
       font-size: 0.62rem;
       letter-spacing: 0.35em;
       text-transform: uppercase;
+      color: var(--gray);
       margin-bottom: 2.5rem;
       display: flex;
       align-items: center;
       gap: 1rem;
     }
 
-    .sec-white .section-label { color: #aaa; }
-    .sec-black .section-label { color: #666; }
-
     .section-label::after {
       content: '';
       flex: 1;
       height: 1px;
+      background: rgba(255,255,255,0.08);
     }
-
-    .sec-white .section-label::after { background: rgba(0,0,0,0.1); }
-    .sec-black .section-label::after { background: rgba(255,255,255,0.08); }
 
     /* ── BAND MEMBERS ── */
     .members-grid {
@@ -234,7 +214,7 @@
     .member-photo-placeholder {
       width: 100%;
       aspect-ratio: 1;
-      background: #eee;
+      background: #1a1a1a;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -242,16 +222,11 @@
       font-size: 0.62rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: #bbb;
+      color: #444;
     }
 
-    .sec-black .member-photo-placeholder { background: #1a1a1a; color: #444; }
-
     .member-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
-    .member-role { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
-
-    .sec-white .member-role { color: #999; }
-    .sec-black .member-role { color: #666; }
+    .member-role { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); }
 
     /* ── EVENTI ── */
     .event-card {
@@ -259,15 +234,11 @@
       display: flex;
       gap: 2rem;
       align-items: center;
-      border-bottom: 1px solid;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       transition: opacity 0.2s;
     }
 
-    .event-card:first-of-type { border-top: 1px solid; }
-
-    .sec-white .event-card { border-color: rgba(0,0,0,0.1); }
-    .sec-black .event-card { border-color: rgba(255,255,255,0.08); }
-
+    .event-card:first-of-type { border-top: 1px solid rgba(255,255,255,0.08); }
     .event-card:hover { opacity: 0.7; }
 
     .event-date {
@@ -285,42 +256,32 @@
       font-size: 0.6rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
+      color: var(--gray);
       margin-top: 0.2rem;
       font-weight: 400;
     }
 
-    .sec-white .event-date span { color: #999; }
-    .sec-black .event-date span { color: #666; }
-
     .event-info h3 { font-weight: 600; font-size: 1rem; margin-bottom: 0.2rem; }
-    .event-info p { font-size: 0.78rem; }
-
-    .sec-white .event-info p { color: #999; }
-    .sec-black .event-info p { color: #666; }
+    .event-info p { font-size: 0.78rem; color: var(--gray); }
 
     .event-badge {
       margin-left: auto;
       font-size: 0.6rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      border: 1px solid;
+      border: 1px solid rgba(255,255,255,0.3);
       padding: 0.3rem 0.8rem;
       white-space: nowrap;
     }
-
-    .sec-black .event-badge { border-color: rgba(255,255,255,0.3); color: #fff; }
-    .sec-white .event-badge { border-color: rgba(0,0,0,0.3); color: #000; }
 
     .events-sublabel {
       font-size: 0.6rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
+      color: var(--gray);
       margin-bottom: 1rem;
       margin-top: 3rem;
     }
-
-    .sec-white .events-sublabel { color: #aaa; }
-    .sec-black .events-sublabel { color: #666; }
 
     .events-past-grid {
       display: grid;
@@ -333,10 +294,8 @@
       position: relative;
       aspect-ratio: 4/3;
       overflow: hidden;
-      background: #eee;
+      background: #1a1a1a;
     }
-
-    .sec-black .past-event { background: #1a1a1a; }
 
     .past-event img {
       width: 100%; height: 100%;
@@ -355,10 +314,8 @@
       font-size: 0.62rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: #bbb;
+      color: #444;
     }
-
-    .sec-black .past-event-placeholder { color: #444; }
 
     /* ── MERCH ── */
     .merch-grid {
@@ -376,34 +333,27 @@
 
     .merch-placeholder {
       width: 100%; aspect-ratio: 1;
-      background: #eee;
+      background: #1a1a1a;
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 1rem;
       font-size: 0.62rem; letter-spacing: 0.15em;
-      text-transform: uppercase; color: #bbb;
+      text-transform: uppercase; color: #444;
     }
 
-    .sec-black .merch-placeholder { background: #1a1a1a; color: #444; }
-
     .merch-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
-    .merch-desc { font-size: 0.78rem; }
-
-    .sec-white .merch-desc { color: #999; }
-    .sec-black .merch-desc { color: #666; }
+    .merch-desc { font-size: 0.78rem; color: var(--gray); }
 
     /* ── CONTATTI ── */
     .contact-email {
       font-size: 1.1rem;
       font-weight: 600;
+      color: var(--off-white);
       text-decoration: none;
-      border-bottom: 1px solid;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
       padding-bottom: 0.2rem;
       display: inline-block;
       transition: opacity 0.2s;
     }
-
-    .sec-white .contact-email { color: var(--black); border-color: rgba(0,0,0,0.2); }
-    .sec-black .contact-email { color: #fff; border-color: rgba(255,255,255,0.2); }
 
     .contact-email:hover { opacity: 0.6; }
 
@@ -413,7 +363,8 @@
       display: inline-flex;
       align-items: center;
       padding: 0.7rem 1.6rem;
-      border: 1px solid;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--off-white);
       text-decoration: none;
       font-size: 0.75rem;
       letter-spacing: 0.12em;
@@ -424,12 +375,20 @@
 
     .btn:hover { opacity: 0.6; }
 
-    .sec-white .btn { color: var(--black); border-color: rgba(0,0,0,0.25); }
-    .sec-black .btn { color: #fff; border-color: rgba(255,255,255,0.2); }
+    /* ── DIVIDER ── */
+    .divider {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1), transparent);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--black);
+      position: relative;
+      z-index: 1;
       border-top: 1px solid rgba(255,255,255,0.06);
       padding: 1.8rem 2.5rem;
       display: flex;
@@ -437,13 +396,15 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-      color: #fff;
     }
 
     footer p { font-size: 0.72rem; color: #555; letter-spacing: 0.06em; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
+      .hero-content { flex-direction: column; gap: 1.5rem; padding-top: 7rem; }
+      .hero-sticker { height: min(35vh, 260px); }
+      .hero-banner { width: 90vw; }
       .sec-inner { padding: 3.5rem 1.2rem; }
       .members-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
       .event-card { flex-wrap: wrap; gap: 1rem; }
@@ -477,19 +438,18 @@
     <a href="#contatti" onclick="closeMenu()">Contatti</a>
   </div>
 
-  <!-- HOME — bianco -->
+  <!-- HOME -->
   <div class="hero" id="home">
     <div class="hero-content">
-      <h1 class="hero-title">Bandellamadonna</h1>
-      <div class="hero-logo-box">
-        <img src="images/Logo_BDM.png" alt="Bandellamadonna" />
-      </div>
-      <p class="hero-sub">Ska · Punk · Milano</p>
+      <img src="images/Sticker_verticale.png" alt="BDM" class="hero-sticker" />
+      <img src="images/Sticker_orizzontale.png" alt="Bandellamadonna" class="hero-banner" />
     </div>
   </div>
 
-  <!-- LA BAND — nero -->
-  <div class="sec sec-black" id="band">
+  <div class="divider"></div>
+
+  <!-- LA BAND -->
+  <div class="sec" id="band">
     <div class="sec-inner">
       <p class="section-label">La Band</p>
       <div class="members-grid">
@@ -546,8 +506,10 @@
     </div>
   </div>
 
-  <!-- EVENTI — bianco -->
-  <div class="sec sec-white" id="eventi">
+  <div class="divider"></div>
+
+  <!-- EVENTI -->
+  <div class="sec" id="eventi">
     <div class="sec-inner">
       <p class="section-label">Eventi</p>
 
@@ -566,42 +528,23 @@
 
       <div class="event-card">
         <div class="event-date">25<span>Ott 2025</span></div>
-        <div class="event-info">
-          <h3>Live @ C.I.Q.</h3>
-          <p>Milano, Lombardia</p>
-        </div>
+        <div class="event-info"><h3>Live @ C.I.Q.</h3><p>Milano, Lombardia</p></div>
       </div>
-
       <div class="event-card">
         <div class="event-date">21<span>Dic 2024</span></div>
-        <div class="event-info">
-          <h3>Live @ Spazioparco</h3>
-          <p>Milano, Lombardia</p>
-        </div>
+        <div class="event-info"><h3>Live @ Spazioparco</h3><p>Milano, Lombardia</p></div>
       </div>
-
       <div class="event-card">
         <div class="event-date">30<span>Nov 2024</span></div>
-        <div class="event-info">
-          <h3>Live @ Barrio's</h3>
-          <p>Milano, Lombardia</p>
-        </div>
+        <div class="event-info"><h3>Live @ Barrio's</h3><p>Milano, Lombardia</p></div>
       </div>
-
       <div class="event-card">
         <div class="event-date">7<span>Ott 2023</span></div>
-        <div class="event-info">
-          <h3>Matrimonio Lorenzo R.</h3>
-          <p>Teramo, Abruzzo</p>
-        </div>
+        <div class="event-info"><h3>Matrimonio Lorenzo R.</h3><p>Teramo, Abruzzo</p></div>
       </div>
-
       <div class="event-card">
         <div class="event-date">30<span>Lug 2022</span></div>
-        <div class="event-info">
-          <h3>Matrimonio Mirco</h3>
-          <p>Teramo, Abruzzo</p>
-        </div>
+        <div class="event-info"><h3>Matrimonio Mirco</h3><p>Teramo, Abruzzo</p></div>
       </div>
 
       <p class="events-sublabel">Foto & Video</p>
@@ -625,12 +568,13 @@
     </div>
   </div>
 
-  <!-- MERCH — nero -->
-  <div class="sec sec-black" id="merch">
+  <div class="divider"></div>
+
+  <!-- MERCH -->
+  <div class="sec" id="merch">
     <div class="sec-inner">
       <p class="section-label">Merch</p>
       <div class="merch-grid">
-
         <div class="merch-item">
           <img src="images/merch_logo.png" alt="T-Shirt Logo"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -638,7 +582,6 @@
           <p class="merch-name">T-Shirt Logo</p>
           <p class="merch-desc">Maglietta nera con logo Bandellamadonna</p>
         </div>
-
         <div class="merch-item">
           <img src="images/merch_scritta.png" alt="T-Shirt Scritta"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -646,19 +589,20 @@
           <p class="merch-name">T-Shirt Scritta</p>
           <p class="merch-desc">Maglietta nera con scritta Bandellamadonna</p>
         </div>
-
       </div>
-      <p style="font-size:0.8rem;color:#666;margin-top:1.5rem;line-height:1.7;">
-        Per acquistare scrivici a <a href="mailto:bandellamadonna@gmail.com" style="color:#fff;">bandellamadonna@gmail.com</a>
+      <p style="font-size:0.8rem;color:var(--gray);margin-top:1.5rem;line-height:1.7;">
+        Per acquistare scrivici a <a href="mailto:bandellamadonna@gmail.com" style="color:var(--off-white);">bandellamadonna@gmail.com</a>
       </p>
     </div>
   </div>
 
-  <!-- CONTATTI — bianco -->
-  <div class="sec sec-white" id="contatti">
+  <div class="divider"></div>
+
+  <!-- CONTATTI -->
+  <div class="sec" id="contatti">
     <div class="sec-inner">
       <p class="section-label">Contatti</p>
-      <p style="color:#999;font-size:0.9rem;line-height:1.8;margin-bottom:1.5rem;">
+      <p style="color:var(--gray);font-size:0.9rem;line-height:1.8;margin-bottom:1.5rem;">
         Per booking, collaborazioni o semplicemente per dirci che vi piace quello che facciamo.
       </p>
       <a href="mailto:bandellamadonna@gmail.com" class="contact-email">bandellamadonna@gmail.com</a>
