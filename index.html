@@ -48,13 +48,10 @@
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
-    .nav-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.3rem;
-      letter-spacing: 0.15em;
-      color: var(--off-white);
-      text-decoration: none;
-      z-index: 101;
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+      display: block;
     }
 
     .nav-links { display: flex; gap: 2rem; list-style: none; }
@@ -129,13 +126,11 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 3rem;
       padding: 6rem 2rem 2rem;
       animation: fadeUp 0.8s ease both;
     }
 
-    .hero-sticker { height: min(55vh, 420px); width: auto; display: block; flex-shrink: 0; }
-    .hero-banner { width: min(55vw, 600px); height: auto; display: block; }
+    .hero-banner { width: min(70vw, 750px); height: auto; display: block; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -449,17 +444,7 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
-      .hero-content {
-        flex-direction: column;
-        gap: 1.5rem;
-        padding-top: 5rem;      /* più in alto su mobile */
-        padding-bottom: 2rem;
-        justify-content: flex-start;
-        min-height: 100vh;
-        align-items: center;
-      }
-
-      .hero-sticker { height: min(32vh, 220px); }
+      .hero-content { padding-top: 5rem; }
       .hero-banner { width: 88vw; }
       .sec-inner { padding: 3.5rem 1.2rem; }
       .members-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
@@ -473,7 +458,7 @@
 <body>
 
   <nav>
-    <a href="#home" class="nav-logo">BDM</a>
+    <a href="#home" class="nav-logo"><img src="images/Sticker_verticale.png" alt="BDM" /></a>
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
       <li><a href="#band">La Band</a></li>
@@ -534,7 +519,6 @@
   <!-- HOME -->
   <div class="hero" id="home">
     <div class="hero-content">
-      <img src="images/Sticker_verticale.png" alt="BDM" class="hero-sticker" />
       <img src="images/Sticker_orizzontale.png" alt="Bandellamadonna" class="hero-banner" />
     </div>
   </div>
