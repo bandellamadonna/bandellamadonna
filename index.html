@@ -24,7 +24,6 @@
       color: var(--off-white);
     }
 
-    /* ── SFONDO GLOBALE ── */
     body::before {
       content: '';
       position: fixed;
@@ -58,11 +57,7 @@
       z-index: 101;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
 
     .nav-links a {
       color: var(--gray);
@@ -84,11 +79,8 @@
     }
 
     .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--off-white);
-      transition: all 0.3s;
+      display: block; width: 24px; height: 2px;
+      background: var(--off-white); transition: all 0.3s;
     }
 
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -97,13 +89,11 @@
 
     .mobile-menu {
       display: none;
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background: rgba(13,13,13,0.98);
       z-index: 99;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      align-items: center; justify-content: center;
       gap: 2.5rem;
     }
 
@@ -122,18 +112,6 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       nav { padding: 1rem 1.4rem; }
-    }
-
-    /* ── SEZIONI ── */
-    .sec {
-      position: relative;
-      z-index: 1;
-    }
-
-    .sec-inner {
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 5rem 2rem;
     }
 
     /* ── HERO ── */
@@ -156,25 +134,19 @@
       animation: fadeUp 0.8s ease both;
     }
 
-    .hero-sticker {
-      height: min(55vh, 420px);
-      width: auto;
-      display: block;
-      flex-shrink: 0;
-    }
-
-    .hero-banner {
-      width: min(55vw, 600px);
-      height: auto;
-      display: block;
-    }
+    .hero-sticker { height: min(55vh, 420px); width: auto; display: block; flex-shrink: 0; }
+    .hero-banner { width: min(55vw, 600px); height: auto; display: block; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── SECTION LABEL ── */
+    /* ── SEZIONI ── */
+    .sec { position: relative; z-index: 1; }
+
+    .sec-inner { max-width: 920px; margin: 0 auto; padding: 5rem 2rem; }
+
     .section-label {
       font-size: 0.62rem;
       letter-spacing: 0.35em;
@@ -187,13 +159,11 @@
     }
 
     .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
+      content: ''; flex: 1; height: 1px;
       background: rgba(255,255,255,0.08);
     }
 
-    /* ── BAND MEMBERS ── */
+    /* ── BAND ── */
     .members-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -203,26 +173,15 @@
     .member { display: flex; flex-direction: column; }
 
     .member-photo {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(100%);
-      margin-bottom: 0.8rem;
+      width: 100%; aspect-ratio: 1; object-fit: cover;
+      display: block; filter: grayscale(100%); margin-bottom: 0.8rem;
     }
 
     .member-photo-placeholder {
-      width: 100%;
-      aspect-ratio: 1;
-      background: #1a1a1a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 0.8rem;
-      font-size: 0.62rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #444;
+      width: 100%; aspect-ratio: 1; background: #1a1a1a;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.8rem; font-size: 0.62rem;
+      letter-spacing: 0.15em; text-transform: uppercase; color: #444;
     }
 
     .member-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
@@ -239,83 +198,172 @@
     }
 
     .event-card:first-of-type { border-top: 1px solid rgba(255,255,255,0.08); }
-    .event-card:hover { opacity: 0.7; }
 
     .event-date {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.6rem;
-      line-height: 1;
-      letter-spacing: 0.05em;
-      min-width: 65px;
-      text-align: center;
+      font-size: 2.6rem; line-height: 1;
+      letter-spacing: 0.05em; min-width: 65px; text-align: center;
     }
 
     .event-date span {
-      display: block;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-top: 0.2rem;
-      font-weight: 400;
+      display: block; font-family: 'Inter', sans-serif;
+      font-size: 0.6rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gray);
+      margin-top: 0.2rem; font-weight: 400;
     }
 
+    .event-info { flex: 1; }
     .event-info h3 { font-weight: 600; font-size: 1rem; margin-bottom: 0.2rem; }
     .event-info p { font-size: 0.78rem; color: var(--gray); }
 
-    .event-badge {
-      margin-left: auto;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
+    .event-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: var(--off-white);
+      text-decoration: none;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      border: 1px solid rgba(255,255,255,0.3);
-      padding: 0.3rem 0.8rem;
+      font-weight: 500;
       white-space: nowrap;
+      cursor: pointer;
+      background: transparent;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
     }
 
-    .events-sublabel {
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 1rem;
-      margin-top: 3rem;
-    }
+    .event-btn:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.5); }
+    .event-btn.prossimo { border-color: rgba(255,255,255,0.5); }
 
-    .events-past-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .past-event {
-      position: relative;
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      background: #1a1a1a;
-    }
-
-    .past-event img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: grayscale(100%);
-      transition: transform 0.4s;
-    }
-
-    .past-event:hover img { transform: scale(1.04); }
-
-    .past-event-placeholder {
-      width: 100%; height: 100%;
-      display: flex;
+    /* ── MODAL ISCRIZIONE ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
       align-items: center;
       justify-content: center;
-      font-size: 0.62rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: #444;
+      padding: 1rem;
     }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: #141414;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute; top: 1rem; right: 1.2rem;
+      background: none; border: none;
+      color: var(--gray); font-size: 1.4rem;
+      cursor: pointer; line-height: 1;
+    }
+
+    .modal h3 {
+      font-size: 1rem; font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .modal .modal-event-name {
+      font-size: 0.75rem; color: var(--gray);
+      margin-bottom: 1.8rem;
+    }
+
+    .form-field { margin-bottom: 1.2rem; }
+
+    .form-field label {
+      display: block; font-size: 0.68rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gray); margin-bottom: 0.4rem;
+    }
+
+    .form-field input {
+      width: 100%; background: #1e1e1e;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--off-white); padding: 0.7rem 0.9rem;
+      font-size: 0.85rem; font-family: 'Inter', sans-serif;
+      outline: none; transition: border-color 0.2s;
+    }
+
+    .form-field input:focus { border-color: rgba(255,255,255,0.4); }
+
+    .form-check {
+      display: flex; align-items: flex-start;
+      gap: 0.6rem; margin-bottom: 1rem;
+      font-size: 0.75rem; color: var(--gray); line-height: 1.5;
+      cursor: pointer;
+    }
+
+    .form-check input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; }
+
+    .btn-submit {
+      width: 100%; padding: 0.85rem;
+      background: var(--off-white); color: var(--black);
+      border: none; font-family: 'Inter', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.12em;
+      text-transform: uppercase; font-weight: 600;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+
+    .btn-submit:hover { opacity: 0.85; }
+
+    .form-success {
+      display: none; text-align: center;
+      padding: 1rem 0; font-size: 0.9rem;
+      color: var(--off-white);
+    }
+
+    /* ── CONTATTI & NEWSLETTER ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .contact-block h4 {
+      font-size: 0.62rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+
+    .social-row { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center;
+      padding: 0.7rem 1.6rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--off-white); text-decoration: none;
+      font-size: 0.75rem; letter-spacing: 0.12em;
+      text-transform: uppercase; font-weight: 500;
+      transition: all 0.2s; background: transparent;
+      font-family: 'Inter', sans-serif; cursor: pointer;
+    }
+
+    .btn:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.5); }
+
+    .contact-form-field { margin-bottom: 1rem; }
+
+    .contact-form-field input,
+    .contact-form-field textarea {
+      width: 100%; background: #1e1e1e;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--off-white); padding: 0.7rem 0.9rem;
+      font-size: 0.85rem; font-family: 'Inter', sans-serif;
+      outline: none; transition: border-color 0.2s; resize: none;
+    }
+
+    .contact-form-field input:focus,
+    .contact-form-field textarea:focus { border-color: rgba(255,255,255,0.4); }
+
+    .contact-form-field input::placeholder,
+    .contact-form-field textarea::placeholder { color: #555; }
 
     /* ── MERCH ── */
     .merch-grid {
@@ -325,90 +373,56 @@
     }
 
     .merch-item img {
-      width: 100%; aspect-ratio: 1;
-      object-fit: cover; display: block;
-      filter: grayscale(100%);
-      margin-bottom: 1rem;
+      width: 100%; aspect-ratio: 1; object-fit: cover;
+      display: block; filter: grayscale(100%); margin-bottom: 1rem;
     }
 
     .merch-placeholder {
-      width: 100%; aspect-ratio: 1;
-      background: #1a1a1a;
+      width: 100%; aspect-ratio: 1; background: #1a1a1a;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem;
-      font-size: 0.62rem; letter-spacing: 0.15em;
-      text-transform: uppercase; color: #444;
+      margin-bottom: 1rem; font-size: 0.62rem;
+      letter-spacing: 0.15em; text-transform: uppercase; color: #444;
     }
 
     .merch-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
     .merch-desc { font-size: 0.78rem; color: var(--gray); }
 
-    /* ── CONTATTI ── */
-    .contact-email {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--off-white);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      padding-bottom: 0.2rem;
-      display: inline-block;
-      transition: opacity 0.2s;
-    }
-
-    .contact-email:hover { opacity: 0.6; }
-
-    .social-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 2rem; }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.7rem 1.6rem;
-      border: 1px solid rgba(255,255,255,0.2);
-      color: var(--off-white);
-      text-decoration: none;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 500;
-      transition: opacity 0.2s;
-    }
-
-    .btn:hover { opacity: 0.6; }
-
     /* ── DIVIDER ── */
     .divider {
-      width: 1px;
-      height: 60px;
+      width: 1px; height: 60px;
       background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1), transparent);
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
+      margin: 0 auto; position: relative; z-index: 1;
     }
 
     /* ── FOOTER ── */
     footer {
-      position: relative;
-      z-index: 1;
+      position: relative; z-index: 1;
       border-top: 1px solid rgba(255,255,255,0.06);
       padding: 1.8rem 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 1rem;
     }
 
     footer p { font-size: 0.72rem; color: #555; letter-spacing: 0.06em; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
-      .hero-content { flex-direction: column; gap: 1.5rem; padding-top: 7rem; }
-      .hero-sticker { height: min(35vh, 260px); }
-      .hero-banner { width: 90vw; }
+      .hero-content {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding-top: 5rem;      /* più in alto su mobile */
+        padding-bottom: 2rem;
+        justify-content: flex-start;
+        min-height: 100vh;
+        align-items: center;
+      }
+
+      .hero-sticker { height: min(32vh, 220px); }
+      .hero-banner { width: 88vw; }
       .sec-inner { padding: 3.5rem 1.2rem; }
       .members-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-      .event-card { flex-wrap: wrap; gap: 1rem; }
-      .event-badge { margin-left: 0; }
+      .event-card { flex-wrap: wrap; gap: 0.8rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
       .merch-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; }
     }
@@ -438,6 +452,41 @@
     <a href="#contatti" onclick="closeMenu()">Contatti</a>
   </div>
 
+  <!-- MODAL ISCRIZIONE -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <h3>Iscriviti all'evento</h3>
+      <p class="modal-event-name" id="modalEventName"></p>
+      <div id="modalForm">
+        <div class="form-field">
+          <label>Nome *</label>
+          <input type="text" id="fieldNome" placeholder="Il tuo nome" />
+        </div>
+        <div class="form-field">
+          <label>Cognome *</label>
+          <input type="text" id="fieldCognome" placeholder="Il tuo cognome" />
+        </div>
+        <div class="form-field">
+          <label>Email *</label>
+          <input type="email" id="fieldEmail" placeholder="la@tua.email" />
+        </div>
+        <label class="form-check">
+          <input type="checkbox" id="checkPrivacy" />
+          Acconsento al trattamento dei dati personali ai sensi del GDPR (Reg. UE 2016/679) *
+        </label>
+        <label class="form-check">
+          <input type="checkbox" id="checkNewsletter" />
+          Voglio iscrivermi alla newsletter per ricevere aggiornamenti sui prossimi concerti
+        </label>
+        <button class="btn-submit" onclick="submitIscrizione()">Conferma iscrizione</button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        ✓ Iscrizione ricevuta! Ti aspettiamo al concerto.
+      </div>
+    </div>
+  </div>
+
   <!-- HOME -->
   <div class="hero" id="home">
     <div class="hero-content">
@@ -453,7 +502,6 @@
     <div class="sec-inner">
       <p class="section-label">La Band</p>
       <div class="members-grid">
-
         <div class="member">
           <img src="images/foto_fabio.png" alt="Fabio Patriarca" class="member-photo"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -461,7 +509,6 @@
           <p class="member-name">Fabio Patriarca</p>
           <p class="member-role">Voce / Frontman</p>
         </div>
-
         <div class="member">
           <img src="images/foto_mirco.png" alt="Mirco Patriarca" class="member-photo"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -469,7 +516,6 @@
           <p class="member-name">Mirco Patriarca</p>
           <p class="member-role">Tromba</p>
         </div>
-
         <div class="member">
           <img src="images/foto_lorenzo_dp.png" alt="Lorenzo Di Pietro" class="member-photo"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -477,7 +523,6 @@
           <p class="member-name">Lorenzo Di Pietro</p>
           <p class="member-role">Sax</p>
         </div>
-
         <div class="member">
           <img src="images/foto_lorenzo_r.png" alt="Lorenzo Recchilungo" class="member-photo"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -485,7 +530,6 @@
           <p class="member-name">Lorenzo Recchilungo</p>
           <p class="member-role">Chitarra</p>
         </div>
-
         <div class="member">
           <img src="images/foto_pier.png" alt="Pier Francesco Piazza" class="member-photo"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -493,7 +537,6 @@
           <p class="member-name">Pier Francesco Piazza</p>
           <p class="member-role">Basso</p>
         </div>
-
         <div class="member">
           <img src="images/foto_mario.png" alt="Mario Di Ferdinando" class="member-photo"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -501,7 +544,6 @@
           <p class="member-name">Mario Di Ferdinando</p>
           <p class="member-role">Batteria</p>
         </div>
-
       </div>
     </div>
   </div>
@@ -513,58 +555,45 @@
     <div class="sec-inner">
       <p class="section-label">Eventi</p>
 
-      <p class="events-sublabel" style="margin-top:0;">Prossimi concerti</p>
-
       <div class="event-card">
         <div class="event-date">12<span>Ago 2026</span></div>
         <div class="event-info">
           <h3>Live @ Basciano / Tomolati</h3>
-          <p>Teramo, Abruzzo — Dettagli in arrivo</p>
+          <p>Teramo, Abruzzo</p>
         </div>
-        <div class="event-badge">Prossimo</div>
+        <button class="event-btn prossimo" onclick="openModal('Live @ Basciano / Tomolati — 12 Ago 2026')">Iscriviti</button>
       </div>
-
-      <p class="events-sublabel">Concerti passati</p>
 
       <div class="event-card">
         <div class="event-date">25<span>Ott 2025</span></div>
         <div class="event-info"><h3>Live @ C.I.Q.</h3><p>Milano, Lombardia</p></div>
+        <a href="#" class="event-btn">Foto & Video</a>
       </div>
+
       <div class="event-card">
         <div class="event-date">21<span>Dic 2024</span></div>
         <div class="event-info"><h3>Live @ Spazioparco</h3><p>Milano, Lombardia</p></div>
+        <a href="#" class="event-btn">Foto & Video</a>
       </div>
+
       <div class="event-card">
         <div class="event-date">30<span>Nov 2024</span></div>
         <div class="event-info"><h3>Live @ Barrio's</h3><p>Milano, Lombardia</p></div>
+        <a href="#" class="event-btn">Foto & Video</a>
       </div>
+
       <div class="event-card">
         <div class="event-date">7<span>Ott 2023</span></div>
         <div class="event-info"><h3>Matrimonio Lorenzo R.</h3><p>Teramo, Abruzzo</p></div>
+        <a href="#" class="event-btn">Foto & Video</a>
       </div>
+
       <div class="event-card">
         <div class="event-date">30<span>Lug 2022</span></div>
         <div class="event-info"><h3>Matrimonio Mirco</h3><p>Teramo, Abruzzo</p></div>
+        <a href="#" class="event-btn">Foto & Video</a>
       </div>
 
-      <p class="events-sublabel">Foto & Video</p>
-      <div class="events-past-grid">
-        <div class="past-event">
-          <img src="images/evento_1.png" alt="Evento"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="past-event-placeholder" style="display:none">Foto evento</div>
-        </div>
-        <div class="past-event">
-          <img src="images/evento_2.png" alt="Evento"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="past-event-placeholder" style="display:none">Foto evento</div>
-        </div>
-        <div class="past-event">
-          <img src="images/evento_3.png" alt="Evento"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="past-event-placeholder" style="display:none">Foto evento</div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -602,13 +631,50 @@
   <div class="sec" id="contatti">
     <div class="sec-inner">
       <p class="section-label">Contatti</p>
-      <p style="color:var(--gray);font-size:0.9rem;line-height:1.8;margin-bottom:1.5rem;">
-        Per booking, collaborazioni o semplicemente per dirci che vi piace quello che facciamo.
-      </p>
-      <a href="mailto:bandellamadonna@gmail.com" class="contact-email">bandellamadonna@gmail.com</a>
-      <div class="social-row">
-        <a href="https://www.instagram.com/bandellamadonna?igsh=MTBsdGwyamllaXJ0Zw==" target="_blank" class="btn">Instagram</a>
-        <a href="https://www.facebook.com/profile.php?id=61578020600803" target="_blank" class="btn">Facebook</a>
+      <div class="contact-grid">
+
+        <!-- Colonna sinistra: social + newsletter -->
+        <div class="contact-block">
+          <h4>Seguici</h4>
+          <div class="social-row" style="margin-bottom:2rem;">
+            <a href="https://www.instagram.com/bandellamadonna?igsh=MTBsdGwyamllaXJ0Zw==" target="_blank" class="btn">Instagram</a>
+            <a href="https://www.facebook.com/profile.php?id=61578020600803" target="_blank" class="btn">Facebook</a>
+            <a href="mailto:bandellamadonna@gmail.com" class="btn">Email</a>
+          </div>
+
+          <h4>Newsletter</h4>
+          <p style="font-size:0.8rem;color:var(--gray);margin-bottom:1rem;line-height:1.6;">Iscriviti per ricevere aggiornamenti sui prossimi concerti.</p>
+          <div class="contact-form-field">
+            <input type="email" id="newsletterEmail" placeholder="La tua email" />
+          </div>
+          <label class="form-check" style="margin-bottom:1rem;">
+            <input type="checkbox" id="newsletterPrivacy" />
+            Acconsento al trattamento dei dati personali (GDPR)
+          </label>
+          <button class="btn" onclick="submitNewsletter()" style="width:100%;justify-content:center;">Iscriviti alla newsletter</button>
+          <p id="newsletterSuccess" style="display:none;font-size:0.8rem;color:var(--off-white);margin-top:0.8rem;">✓ Iscritto! Ti terremo aggiornato.</p>
+        </div>
+
+        <!-- Colonna destra: form contatto -->
+        <div class="contact-block">
+          <h4>Scrivici</h4>
+          <div class="contact-form-field">
+            <input type="text" id="contactNome" placeholder="Nome e cognome" />
+          </div>
+          <div class="contact-form-field">
+            <input type="email" id="contactEmail" placeholder="Email" />
+          </div>
+          <div class="contact-form-field">
+            <textarea id="contactMessaggio" rows="5" placeholder="Il tuo messaggio"></textarea>
+          </div>
+          <label class="form-check" style="margin-bottom:1rem;">
+            <input type="checkbox" id="contactPrivacy" />
+            Acconsento al trattamento dei dati personali (GDPR)
+          </label>
+          <button class="btn" onclick="submitContatto()" style="width:100%;justify-content:center;">Invia messaggio</button>
+          <p id="contactSuccess" style="display:none;font-size:0.8rem;color:var(--off-white);margin-top:0.8rem;">✓ Messaggio inviato! Ti risponderemo presto.</p>
+        </div>
+
       </div>
     </div>
   </div>
@@ -619,6 +685,7 @@
   </footer>
 
   <script>
+    // NAV
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     hamburger.addEventListener('click', () => {
@@ -630,6 +697,59 @@
       hamburger.classList.remove('open');
       mobileMenu.classList.remove('open');
       document.body.style.overflow = '';
+    }
+
+    // MODAL
+    function openModal(eventName) {
+      document.getElementById('modalEventName').textContent = eventName;
+      document.getElementById('modalOverlay').classList.add('open');
+      document.getElementById('modalForm').style.display = 'block';
+      document.getElementById('formSuccess').style.display = 'none';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    function submitIscrizione() {
+      const nome = document.getElementById('fieldNome').value.trim();
+      const cognome = document.getElementById('fieldCognome').value.trim();
+      const email = document.getElementById('fieldEmail').value.trim();
+      const privacy = document.getElementById('checkPrivacy').checked;
+      if (!nome || !cognome || !email || !privacy) {
+        alert('Compila tutti i campi obbligatori e accetta il trattamento dei dati.');
+        return;
+      }
+      document.getElementById('modalForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }
+
+    function submitNewsletter() {
+      const email = document.getElementById('newsletterEmail').value.trim();
+      const privacy = document.getElementById('newsletterPrivacy').checked;
+      if (!email || !privacy) {
+        alert('Inserisci la tua email e accetta il trattamento dei dati.');
+        return;
+      }
+      document.getElementById('newsletterSuccess').style.display = 'block';
+    }
+
+    function submitContatto() {
+      const nome = document.getElementById('contactNome').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const msg = document.getElementById('contactMessaggio').value.trim();
+      const privacy = document.getElementById('contactPrivacy').checked;
+      if (!nome || !email || !msg || !privacy) {
+        alert('Compila tutti i campi e accetta il trattamento dei dati.');
+        return;
+      }
+      document.getElementById('contactSuccess').style.display = 'block';
     }
   </script>
 
