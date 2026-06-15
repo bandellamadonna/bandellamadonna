@@ -425,7 +425,8 @@
       letter-spacing: 0.15em; text-transform: uppercase; color: #444;
     }
 
-    .merch-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .merch-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.15rem; }
+    .merch-price { font-size: 1rem; font-weight: 700; color: var(--off-white); margin-bottom: 0.25rem; }
     .merch-desc { font-size: 0.78rem; color: var(--gray); }
 
     /* ── DIVIDER ── */
@@ -477,7 +478,7 @@
       <li><a href="#home">Home</a></li>
       <li><a href="#band">La Band</a></li>
       <li><a href="#eventi">Eventi</a></li>
-      <li><a href="fotovideo.html">Foto & Video</a></li>
+      <li><a href="fotovideo.html">Gallery</a></li>
       <li><a href="#merch">Merch</a></li>
       <li><a href="#contatti">Contatti</a></li>
     </ul>
@@ -490,7 +491,7 @@
     <a href="#home" onclick="closeMenu()">Home</a>
     <a href="#band" onclick="closeMenu()">La Band</a>
     <a href="#eventi" onclick="closeMenu()">Eventi</a>
-    <a href="fotovideo.html" onclick="closeMenu()">Foto & Video</a>
+    <a href="fotovideo.html" onclick="closeMenu()">Gallery</a>
     <a href="#merch" onclick="closeMenu()">Merch</a>
     <a href="#contatti" onclick="closeMenu()">Contatti</a>
   </div>
@@ -610,31 +611,31 @@
       <div class="event-card">
         <div class="event-date">25<span>Ott 2025</span></div>
         <div class="event-info"><h3>Live @ C.I.Q.</h3><p>Milano, Lombardia</p></div>
-        <a href="fotovideo.html#evento-5" class="event-btn">Foto & Video</a>
+        <a href="fotovideo.html#evento-5" class="event-btn">Gallery</a>
       </div>
 
       <div class="event-card">
         <div class="event-date">21<span>Dic 2024</span></div>
         <div class="event-info"><h3>Live @ Spazioparco</h3><p>Milano, Lombardia</p></div>
-        <a href="fotovideo.html#evento-4" class="event-btn">Foto & Video</a>
+        <a href="fotovideo.html#evento-4" class="event-btn">Gallery</a>
       </div>
 
       <div class="event-card">
         <div class="event-date">30<span>Nov 2024</span></div>
         <div class="event-info"><h3>Live @ Barrio's</h3><p>Milano, Lombardia</p></div>
-        <a href="fotovideo.html#evento-3" class="event-btn">Foto & Video</a>
+        <a href="fotovideo.html#evento-3" class="event-btn">Gallery</a>
       </div>
 
       <div class="event-card">
         <div class="event-date">7<span>Ott 2023</span></div>
         <div class="event-info"><h3>Evento Privato</h3><p>Teramo, Abruzzo</p></div>
-        <a href="fotovideo.html#evento-2" class="event-btn">Foto & Video</a>
+        <a href="fotovideo.html#evento-2" class="event-btn">Gallery</a>
       </div>
 
       <div class="event-card">
         <div class="event-date">30<span>Lug 2022</span></div>
         <div class="event-info"><h3>Evento Privato</h3><p>Teramo, Abruzzo</p></div>
-        <a href="fotovideo.html#evento-1" class="event-btn">Foto & Video</a>
+        <a href="fotovideo.html#evento-1" class="event-btn">Gallery</a>
       </div>
 
     </div>
@@ -652,6 +653,7 @@
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="merch-placeholder" style="display:none">Foto in arrivo</div>
           <p class="merch-name">T-Shirt Logo</p>
+          <p class="merch-price">15 €</p>
           <p class="merch-desc">Maglietta nera con logo Bandellamadonna</p>
         </div>
         <div class="merch-item">
@@ -659,6 +661,7 @@
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="merch-placeholder" style="display:none">Foto in arrivo</div>
           <p class="merch-name">T-Shirt Scritta</p>
+          <p class="merch-price">15 €</p>
           <p class="merch-desc">Maglietta nera con scritta Bandellamadonna</p>
         </div>
       </div>
