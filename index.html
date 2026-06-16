@@ -771,6 +771,10 @@
       document.body.style.overflow = '';
     }
 
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMerchLightbox();
+    });
+
     // NAV
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
