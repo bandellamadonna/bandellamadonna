@@ -750,14 +750,16 @@
         <!-- Colonna destra: form contatto -->
         <div class="contact-block">
           <h4>Scrivici</h4>
+          <input type="hidden" name="access_key" value="5134f014-aa6b-4c18-b06e-ef3a5d9220c6">
+          <input type="hidden" name="subject" value="Nuovo messaggio dal sito Bandellamadonna">
           <div class="contact-form-field">
-            <input type="text" id="contactNome" placeholder="Nome e cognome" />
+            <input type="text" id="contactNome" name="nome" placeholder="Nome e cognome" />
           </div>
           <div class="contact-form-field">
-            <input type="email" id="contactEmail" placeholder="Email" />
+            <input type="email" id="contactEmail" name="email" placeholder="Email" />
           </div>
           <div class="contact-form-field">
-            <textarea id="contactMessaggio" rows="5" placeholder="Il tuo messaggio"></textarea>
+            <textarea id="contactMessaggio" name="messaggio" rows="5" placeholder="Il tuo messaggio"></textarea>
           </div>
           <label class="form-check" style="margin-bottom:1rem;">
             <input type="checkbox" id="contactPrivacy" />
@@ -765,6 +767,7 @@
           </label>
           <button class="btn" onclick="submitContatto()" style="width:100%;justify-content:center;">Invia messaggio</button>
           <p id="contactSuccess" style="display:none;font-size:0.8rem;color:var(--off-white);margin-top:0.8rem;">✓ Messaggio inviato! Ti risponderemo presto.</p>
+          <p id="contactError" style="display:none;font-size:0.8rem;color:#f66;margin-top:0.8rem;">✗ Errore nell'invio. Riprova o scrivici direttamente.</p>
         </div>
 
       </div>
@@ -854,7 +857,7 @@
       document.getElementById('newsletterSuccess').style.display = 'block';
     }
 
-    function submitContatto() {
+    async function submitContatto() {
       const nome = document.getElementById('contactNome').value.trim();
       const email = document.getElementById('contactEmail').value.trim();
       const msg = document.getElementById('contactMessaggio').value.trim();
@@ -863,7 +866,33 @@
         alert('Compila tutti i campi e accetta il trattamento dei dati.');
         return;
       }
-      document.getElementById('contactSuccess').style.display = 'block';
+      const data = {
+        access_key: '5134f014-aa6b-4c18-b06e-ef3a5d9220c6',
+        subject: 'Nuovo messaggio dal sito Bandellamadonna',
+        nome: nome,
+        email: email,
+        messaggio: msg
+      };
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (result.success) {
+          document.getElementById('contactSuccess').style.display = 'block';
+          document.getElementById('contactError').style.display = 'none';
+          document.getElementById('contactNome').value = '';
+          document.getElementById('contactEmail').value = '';
+          document.getElementById('contactMessaggio').value = '';
+          document.getElementById('contactPrivacy').checked = false;
+        } else {
+          document.getElementById('contactError').style.display = 'block';
+        }
+      } catch(e) {
+        document.getElementById('contactError').style.display = 'block';
+      }
     }
   </script>
 
