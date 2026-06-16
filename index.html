@@ -511,6 +511,12 @@
     <a href="#contatti" onclick="closeMenu()">Contatti</a>
   </div>
 
+  <!-- LIGHTBOX MERCH -->
+  <div class="modal-overlay" id="merchLightbox" style="background:rgba(0,0,0,0.95);" onclick="closeMerchLightbox()">
+    <button style="position:absolute;top:1.2rem;right:1.5rem;background:none;border:none;color:#f0f0ee;font-size:2rem;cursor:pointer;z-index:201;" onclick="closeMerchLightbox()">×</button>
+    <img id="merchLightboxImg" src="" alt="" style="max-width:92vw;max-height:92vh;object-fit:contain;display:block;" onclick="event.stopPropagation()" />
+  </div>
+
   <!-- MODAL ISCRIZIONE -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
@@ -663,7 +669,8 @@
       <p class="section-label">Merch</p>
       <div class="merch-grid">
         <div class="merch-item">
-          <img src="images/merch_logo.png" alt="T-Shirt Logo"
+          <img src="images/merch_logo.png" alt="T-Shirt Logo" style="cursor:pointer;"
+               onclick="openMerchLightbox(this)"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="merch-placeholder" style="display:none">Foto in arrivo</div>
           <p class="merch-name">T-Shirt Logo</p>
@@ -671,7 +678,8 @@
           <p class="merch-desc">Maglietta nera con logo Bandellamadonna</p>
         </div>
         <div class="merch-item">
-          <img src="images/merch_scritta.png" alt="T-Shirt Scritta"
+          <img src="images/merch_scritta.png" alt="T-Shirt Scritta" style="cursor:pointer;"
+               onclick="openMerchLightbox(this)"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="merch-placeholder" style="display:none">Foto in arrivo</div>
           <p class="merch-name">T-Shirt Scritta</p>
@@ -750,6 +758,17 @@
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
+    }
+
+    function openMerchLightbox(img) {
+      document.getElementById('merchLightboxImg').src = img.src;
+      document.getElementById('merchLightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMerchLightbox() {
+      document.getElementById('merchLightbox').classList.remove('open');
+      document.body.style.overflow = '';
     }
 
     // NAV
