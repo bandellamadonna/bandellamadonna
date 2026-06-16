@@ -138,11 +138,17 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
+      width: 100%;
       padding: 0 2rem;
       animation: fadeUp 0.8s ease both;
     }
 
-    .hero-banner { width: min(70vw, 750px); height: auto; display: block; }
+    .hero-banner {
+      width: min(70vw, 750px);
+      max-width: 90vw;
+      height: auto;
+      display: block;
+    }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -193,12 +199,11 @@
 
     .member-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
     .member-role {
-      font-size: 0.6rem;
-      letter-spacing: 0.06em;
+      font-size: 0.48rem;
+      letter-spacing: 0;
       text-transform: uppercase;
       color: var(--gray);
-      word-break: break-word;
-      line-height: 1.3;
+      white-space: nowrap;
     }
 
     /* ── EVENTI ── */
