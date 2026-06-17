@@ -3,7 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; frame-ancestors 'none'; base-uri 'self'">
+  <link rel="icon" type="image/png" href="images/Sticker_verticale.png" />
   <title>Gallery — Bandellamadonna</title>
+
+  <!-- Open Graph / WhatsApp / Social preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.bandellamadonna.com/fotovideo.html" />
+  <meta property="og:title" content="Gallery — Bandellamadonna" />
+  <meta property="og:description" content="Foto e video dei live dei Bandellamadonna." />
+  <meta property="og:image" content="https://www.bandellamadonna.com/images/og_image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="description" content="Foto e video dei live dei Bandellamadonna." />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -120,19 +133,20 @@
     }
 
     .page-title {
-      font-size: 0.62rem;
-      letter-spacing: 0.35em;
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: var(--gray);
+      color: #ddd;
       margin-bottom: 3rem;
       display: flex;
       align-items: center;
       gap: 1rem;
+      font-weight: 600;
     }
 
     .page-title::after {
       content: ''; flex: 1; height: 1px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.12);
     }
 
     /* ── EVENTO BLOCK ── */
@@ -281,12 +295,12 @@
         <p class="fv-luogo">Milano, Lombardia</p>
       </div>
       <div class="fv-grid" data-event="5">
-        <img src="images/events/evento_5_1.jpg" class="fv-img" alt="Foto 1" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_5_2.jpg" class="fv-img" alt="Foto 2" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_5_3.jpg" class="fv-img" alt="Foto 3" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_5_4.jpg" class="fv-img" alt="Foto 4" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_5_5.jpg" class="fv-img" alt="Foto 5" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_5_6.jpg" class="fv-img" alt="Foto 6" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_5_1.jpg" class="fv-img" alt="Live @ C.I.Q. — Bandellamadonna, foto 1" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_5_2.jpg" class="fv-img" alt="Live @ C.I.Q. — Bandellamadonna, foto 2" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_5_3.jpg" class="fv-img" alt="Live @ C.I.Q. — Bandellamadonna, foto 3" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_5_4.jpg" class="fv-img" alt="Live @ C.I.Q. — Bandellamadonna, foto 4" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_5_5.jpg" class="fv-img" alt="Live @ C.I.Q. — Bandellamadonna, foto 5" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_5_6.jpg" class="fv-img" alt="Live @ C.I.Q. — Bandellamadonna, foto 6" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
       </div>
     </div>
 
@@ -300,12 +314,12 @@
         <p class="fv-luogo">Milano, Lombardia</p>
       </div>
       <div class="fv-grid" data-event="4">
-        <img src="images/events/evento_4_1.jpg" class="fv-img" alt="Foto 1" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_4_2.jpg" class="fv-img" alt="Foto 2" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_4_3.jpg" class="fv-img" alt="Foto 3" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_4_4.jpg" class="fv-img" alt="Foto 4" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_4_5.jpg" class="fv-img" alt="Foto 5" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_4_6.jpg" class="fv-img" alt="Foto 6" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_4_1.jpg" class="fv-img" alt="Live @ Spazioparco — Bandellamadonna, foto 1" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_4_2.jpg" class="fv-img" alt="Live @ Spazioparco — Bandellamadonna, foto 2" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_4_3.jpg" class="fv-img" alt="Live @ Spazioparco — Bandellamadonna, foto 3" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_4_4.jpg" class="fv-img" alt="Live @ Spazioparco — Bandellamadonna, foto 4" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_4_5.jpg" class="fv-img" alt="Live @ Spazioparco — Bandellamadonna, foto 5" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_4_6.jpg" class="fv-img" alt="Live @ Spazioparco — Bandellamadonna, foto 6" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
       </div>
     </div>
 
@@ -319,12 +333,12 @@
         <p class="fv-luogo">Milano, Lombardia</p>
       </div>
       <div class="fv-grid" data-event="3">
-        <img src="images/events/evento_3_1.jpg" class="fv-img" alt="Foto 1" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_3_2.jpg" class="fv-img" alt="Foto 2" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_3_3.jpg" class="fv-img" alt="Foto 3" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_3_4.jpg" class="fv-img" alt="Foto 4" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_3_5.jpg" class="fv-img" alt="Foto 5" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_3_6.jpg" class="fv-img" alt="Foto 6" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_3_1.jpg" class="fv-img" alt="Live @ Barrio's — Bandellamadonna, foto 1" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_3_2.jpg" class="fv-img" alt="Live @ Barrio's — Bandellamadonna, foto 2" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_3_3.jpg" class="fv-img" alt="Live @ Barrio's — Bandellamadonna, foto 3" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_3_4.jpg" class="fv-img" alt="Live @ Barrio's — Bandellamadonna, foto 4" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_3_5.jpg" class="fv-img" alt="Live @ Barrio's — Bandellamadonna, foto 5" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_3_6.jpg" class="fv-img" alt="Live @ Barrio's — Bandellamadonna, foto 6" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
       </div>
     </div>
 
@@ -338,12 +352,12 @@
         <p class="fv-luogo">Teramo, Abruzzo</p>
       </div>
       <div class="fv-grid" data-event="2">
-        <img src="images/events/evento_2_1.jpg" class="fv-img" alt="Foto 1" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_2_2.jpg" class="fv-img" alt="Foto 2" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_2_3.jpg" class="fv-img" alt="Foto 3" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_2_4.jpg" class="fv-img" alt="Foto 4" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_2_5.jpg" class="fv-img" alt="Foto 5" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_2_6.jpg" class="fv-img" alt="Foto 6" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_2_1.jpg" class="fv-img" alt="Evento Privato 2023 — Bandellamadonna, foto 1" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_2_2.jpg" class="fv-img" alt="Evento Privato 2023 — Bandellamadonna, foto 2" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_2_3.jpg" class="fv-img" alt="Evento Privato 2023 — Bandellamadonna, foto 3" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_2_4.jpg" class="fv-img" alt="Evento Privato 2023 — Bandellamadonna, foto 4" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_2_5.jpg" class="fv-img" alt="Evento Privato 2023 — Bandellamadonna, foto 5" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_2_6.jpg" class="fv-img" alt="Evento Privato 2023 — Bandellamadonna, foto 6" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
       </div>
     </div>
 
@@ -357,12 +371,12 @@
         <p class="fv-luogo">Teramo, Abruzzo</p>
       </div>
       <div class="fv-grid" data-event="1">
-        <img src="images/events/evento_1_1.jpg" class="fv-img" alt="Foto 1" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_1_2.jpg" class="fv-img" alt="Foto 2" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_1_3.jpg" class="fv-img" alt="Foto 3" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_1_4.jpg" class="fv-img" alt="Foto 4" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_1_5.jpg" class="fv-img" alt="Foto 5" onerror="this.style.display='none'" onclick="openLightbox(this)">
-        <img src="images/events/evento_1_6.jpg" class="fv-img" alt="Foto 6" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_1_1.jpg" class="fv-img" alt="Evento Privato 2022 — Bandellamadonna, foto 1" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_1_2.jpg" class="fv-img" alt="Evento Privato 2022 — Bandellamadonna, foto 2" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_1_3.jpg" class="fv-img" alt="Evento Privato 2022 — Bandellamadonna, foto 3" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_1_4.jpg" class="fv-img" alt="Evento Privato 2022 — Bandellamadonna, foto 4" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_1_5.jpg" class="fv-img" alt="Evento Privato 2022 — Bandellamadonna, foto 5" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
+        <img src="images/events/evento_1_6.jpg" class="fv-img" alt="Evento Privato 2022 — Bandellamadonna, foto 6" loading="lazy" decoding="async" onerror="this.style.display='none'" onclick="openLightbox(this)">
       </div>
     </div>
 
