@@ -661,6 +661,8 @@
         <!-- Colonna destra: form contatto -->
         <div class="contact-block">
           <h4>Scrivici</h4>
+          <!-- Honeypot anti-bot: nascosto agli umani, i bot lo compilano -->
+          <input type="checkbox" id="contactBotcheck" style="display:none !important;" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <div class="contact-form-field">
             <input type="text" id="contactNome" name="nome" placeholder="Nome e cognome" />
           </div>
@@ -768,6 +770,7 @@
       const data = {
         access_key: '5134f014-aa6b-4c18-b06e-ef3a5d9220c6',
         subject: 'Nuovo messaggio dal sito Bandellamadonna',
+        botcheck: document.getElementById('contactBotcheck').checked,
         nome: nome,
         email: email,
         messaggio: msg
