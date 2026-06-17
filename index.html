@@ -538,7 +538,10 @@
   <!-- LIGHTBOX MERCH -->
   <div class="modal-overlay" id="merchLightbox" style="background:rgba(0,0,0,0.95);" onclick="closeMerchLightbox()">
     <button style="position:absolute;top:1.2rem;right:1.5rem;background:none;border:none;color:#f0f0ee;font-size:2rem;cursor:pointer;z-index:201;" onclick="closeMerchLightbox()">×</button>
+    <button style="position:absolute;top:50%;left:0.5rem;transform:translateY(-50%);background:none;border:none;color:#f0f0ee;font-size:2.5rem;cursor:pointer;z-index:201;opacity:0.6;" onclick="event.stopPropagation();merchNav(-1)">‹</button>
     <img id="merchLightboxImg" src="" alt="" style="max-width:92vw;max-height:92vh;object-fit:contain;display:block;" onclick="event.stopPropagation()" />
+    <button style="position:absolute;top:50%;right:0.5rem;transform:translateY(-50%);background:none;border:none;color:#f0f0ee;font-size:2.5rem;cursor:pointer;z-index:201;opacity:0.6;" onclick="event.stopPropagation();merchNav(1)">›</button>
+    <div style="position:absolute;bottom:1.2rem;left:50%;transform:translateX(-50%);font-size:0.72rem;letter-spacing:0.15em;color:#888;" id="merchCounter"></div>
   </div>
 
   <!-- MODAL ISCRIZIONE -->
@@ -787,10 +790,26 @@
       }, 100);
     }
 
+    const merchImgs = ['images/merch_logo.png', 'images/merch_scritta.png'];
+    let merchIdx = 0;
+
     function openMerchLightbox(img) {
-      document.getElementById('merchLightboxImg').src = img.src;
+      const src = img.src.split('/').slice(-1)[0];
+      merchIdx = merchImgs.findIndex(m => m.includes(src.replace(/.*\//, '')));
+      if (merchIdx < 0) merchIdx = 0;
+      showMerchImg();
       document.getElementById('merchLightbox').classList.add('open');
       document.body.style.overflow = 'hidden';
+    }
+
+    function showMerchImg() {
+      document.getElementById('merchLightboxImg').src = merchImgs[merchIdx];
+      document.getElementById('merchCounter').textContent = (merchIdx + 1) + ' / ' + merchImgs.length;
+    }
+
+    function merchNav(dir) {
+      merchIdx = (merchIdx + dir + merchImgs.length) % merchImgs.length;
+      showMerchImg();
     }
 
     function closeMerchLightbox() {
@@ -799,7 +818,10 @@
     }
 
     document.addEventListener('keydown', function(e) {
+      if (!document.getElementById('merchLightbox').classList.contains('open')) return;
       if (e.key === 'Escape') closeMerchLightbox();
+      if (e.key === 'ArrowLeft') merchNav(-1);
+      if (e.key === 'ArrowRight') merchNav(1);
     });
 
     // NAV
