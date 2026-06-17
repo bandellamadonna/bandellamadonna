@@ -408,7 +408,7 @@
 
     function openLightbox(imgEl) {
       const grid = imgEl.closest('.fv-grid');
-      currentImgs = Array.from(grid.querySelectorAll('.fv-img')).filter(i => i.style.display !== 'none' && i.complete && i.naturalWidth > 0);
+      currentImgs = Array.from(grid.querySelectorAll('.fv-img')).filter(i => i.style.display !== 'none');
       currentIdx = currentImgs.indexOf(imgEl);
       showLightboxImg();
       document.getElementById('lightbox').classList.add('open');
@@ -417,7 +417,8 @@
 
     function showLightboxImg() {
       const img = currentImgs[currentIdx];
-      document.getElementById('lightboxImg').src = img.src;
+      const lightboxImg = document.getElementById('lightboxImg');
+      lightboxImg.src = img.src;
       document.getElementById('lightboxCounter').textContent = (currentIdx + 1) + ' / ' + currentImgs.length;
     }
 
