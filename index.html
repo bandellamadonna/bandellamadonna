@@ -539,7 +539,10 @@
   <div class="modal-overlay" id="merchLightbox" style="background:rgba(0,0,0,0.95);" onclick="closeMerchLightbox()">
     <button style="position:absolute;top:1.2rem;right:1.5rem;background:none;border:none;color:#f0f0ee;font-size:2rem;cursor:pointer;z-index:201;" onclick="closeMerchLightbox()">×</button>
     <button style="position:absolute;top:50%;left:0.5rem;transform:translateY(-50%);background:none;border:none;color:#f0f0ee;font-size:2.5rem;cursor:pointer;z-index:201;opacity:0.6;" onclick="event.stopPropagation();merchNav(-1)">‹</button>
-    <img id="merchLightboxImg" src="" alt="" style="max-width:92vw;max-height:92vh;object-fit:contain;display:block;" onclick="event.stopPropagation()" />
+    <div style="position:relative;display:inline-block;" onclick="event.stopPropagation()">
+      <span id="merchLightboxBadge" style="display:none;position:absolute;top:16px;right:16px;z-index:202;font-size:0.7rem;letter-spacing:0.15em;font-weight:600;border:1px solid rgba(255,255,255,0.8);padding:4px 10px;color:#fff;background:rgba(0,0,0,0.6);">NEW</span>
+      <img id="merchLightboxImg" src="" alt="" style="max-width:92vw;max-height:92vh;object-fit:contain;display:block;" />
+    </div>
     <button style="position:absolute;top:50%;right:0.5rem;transform:translateY(-50%);background:none;border:none;color:#f0f0ee;font-size:2.5rem;cursor:pointer;z-index:201;opacity:0.6;" onclick="event.stopPropagation();merchNav(1)">›</button>
     <div style="position:absolute;bottom:1.2rem;left:50%;transform:translateX(-50%);font-size:0.72rem;letter-spacing:0.15em;color:#888;" id="merchCounter"></div>
   </div>
@@ -806,6 +809,9 @@
     function showMerchImg() {
       document.getElementById('merchLightboxImg').src = merchImgs[merchIdx];
       document.getElementById('merchCounter').textContent = (merchIdx + 1) + ' / ' + merchImgs.length;
+      // Mostra badge NEW solo sulla maglietta scritta
+      const badge = document.getElementById('merchLightboxBadge');
+      badge.style.display = merchImgs[merchIdx].includes('merch_scritta') ? 'block' : 'none';
     }
 
     function merchNav(dir) {
