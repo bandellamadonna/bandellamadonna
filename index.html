@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://api.web3forms.com; frame-ancestors 'none'; base-uri 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src https://api.web3forms.com; frame-ancestors 'none'; base-uri 'self'">
   <link rel="icon" type="image/png" href="images/Sticker_verticale.png" />
   <title>Bandellamadonna</title>
 
@@ -189,7 +189,7 @@
 
     .member-photo {
       width: 100%; aspect-ratio: 1; object-fit: cover;
-      display: block; filter: grayscale(100%); margin-bottom: 0.8rem;
+      display: block; margin-bottom: 0.8rem;
     }
 
     .member-photo-placeholder {
@@ -362,13 +362,12 @@
     .fv-img {
       width: 100%; aspect-ratio: 4/3;
       object-fit: cover;
-      filter: grayscale(100%);
       display: block;
-      transition: filter 0.3s, transform 0.3s;
+      transition: transform 0.3s;
       cursor: pointer;
     }
 
-    .fv-img:hover { filter: grayscale(0%); transform: scale(1.02); }
+    .fv-img:hover { transform: scale(1.02); }
 
     .fv-sep {
       height: 1px;
@@ -385,7 +384,7 @@
 
     .merch-item img {
       width: 100%; aspect-ratio: 1; object-fit: cover;
-      display: block; filter: grayscale(100%); margin-bottom: 1rem;
+      display: block; margin-bottom: 1rem; cursor: pointer;
     }
 
     .merch-placeholder {

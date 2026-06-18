@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; frame-ancestors 'none'; base-uri 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self'">
   <link rel="icon" type="image/png" href="images/Sticker_verticale.png" />
   <title>Gallery — Bandellamadonna</title>
 
@@ -178,13 +178,12 @@
       width: 100%;
       aspect-ratio: 4/3;
       object-fit: cover;
-      filter: grayscale(100%);
       display: block;
       cursor: pointer;
-      transition: filter 0.3s, transform 0.3s;
+      transition: transform 0.3s;
     }
 
-    .fv-img:hover { filter: grayscale(0%); transform: scale(1.02); }
+    .fv-img:hover { transform: scale(1.02); }
 
     .fv-sep {
       height: 1px;
