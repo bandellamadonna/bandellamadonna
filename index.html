@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src https://api.web3forms.com https://api.sender.net; frame-ancestors 'none'; base-uri 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https://cdn.sender.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.sender.net; font-src https://fonts.gstatic.com https://cdn.sender.net; script-src 'self' 'unsafe-inline' https://cdn.sender.net; connect-src https://api.web3forms.com https://api.sender.net; frame-src https://cdn.sender.net; frame-ancestors 'none'; base-uri 'self'">
   <link rel="icon" type="image/png" href="images/favicon.png" />
   <title>Bandellamadonna</title>
 
@@ -646,15 +646,7 @@
 
           <h4>Newsletter</h4>
           <p style="font-size:0.8rem;color:var(--gray);margin-bottom:1rem;line-height:1.6;">Iscriviti per ricevere aggiornamenti sui prossimi concerti.</p>
-          <div class="contact-form-field">
-            <input type="email" id="newsletterEmail" placeholder="La tua email" />
-          </div>
-          <label class="form-check" style="margin-bottom:1rem;">
-            <input type="checkbox" id="newsletterPrivacy" />
-            Acconsento al trattamento dei dati personali secondo la <a href="privacy.html" target="_blank" style="color:var(--off-white);text-decoration:underline;">Privacy Policy</a>
-          </label>
-          <button class="btn" onclick="submitNewsletter()" style="width:100%;justify-content:center;">Iscriviti alla newsletter</button>
-          <p id="newsletterSuccess" style="display:none;font-size:0.8rem;color:var(--off-white);margin-top:0.8rem;">✓ Iscritto! Ti terremo aggiornato.</p>
+          <div class="sender-form-field" data-sender-form-id="aKrjox" style="text-align:left"></div>
         </div>
 
         <!-- Colonna destra: form contatto -->
@@ -741,48 +733,6 @@
       document.body.style.overflow = '';
     }
 
-    // NEWSLETTER & CONTATTI
-    async function submitNewsletter() {
-      const email = document.getElementById('newsletterEmail').value.trim();
-      const privacy = document.getElementById('newsletterPrivacy').checked;
-      if (!email || !privacy) {
-        alert('Inserisci la tua email e accetta il trattamento dei dati.');
-        return;
-      }
-      const btn = document.querySelector('button[onclick="submitNewsletter()"]');
-      const originalText = btn.textContent;
-      btn.disabled = true;
-      btn.style.opacity = '0.6';
-      btn.textContent = 'Iscrizione…';
-      try {
-        const res = await fetch('https://api.sender.net/v2/subscribers', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZTgxOGIyZWUxNDIyNjBmYjMzM2M5OGRmNTllZDYzMWU5Mjk5NzFmOTQwZjM5NzgxMjhiY2RmYjZmMDgxMTIxMWE0ODYxYmQ0NGM0ODlhZDUiLCJpYXQiOjE3ODE4NjYyMTUuMTEyNDY4LCJuYmYiOjE3ODE4NjYyMTUuMTEyNDc0LCJleHAiOjQ5MzU0NjYyMTUuMTEwNjU5LCJzdWIiOiIxMDc5NTIzIiwic2NvcGVzIjpbXX0.SRsFrWOwRdIGPi_q_Eh-Rm8AaM92Fb8yDHaC5o7en_OYBoNA2cmSiCifaGagkJdj0f1qflqKhTceFXF_DRatwfncEMLy-9XavDIyOBDDih60o3rR4o3T2gDix34V2Py-Gr2gOdCP3qfvGBTw8Z4_uok58-up0P8v8g6RzZ5D_8HlcalATceYLcfZpD_pB8o3VTo8dnYTF8YgQYFmXlcqWWa0RsJNL0iqXA0r1X0YXAKyve6jXCQBKbZAQdNNsUL2x_lPWDJXFN_wrbo27Qo-gj4olqqkxxcySu-CKsBgJ3RiW3wz-yQmKdfLbfeK3q2EktQFqLonPTlswTevgVYjwvq4-ajexEFHL0_c4173OrnTh2tlw5tW9EY3PtG73Ij7jTPnD-B9iFG8FJ7dCvBD1XUi39a0rt44F-LKBOef2EEJo5nVTBAGPxB8DDg8VgeQS8Ck3cg2MORPoDMgeNHezFG-X2Me5sf_7u5ggzMTcm8uIsSqOanUsi9Pk0iOGP1VN_u8yy3MVY33QQ_9QMbu7HE_rulUJRh9psYTwfGmsKnu9hMfLaO0h4iToI-RFwq7Gs0KK4IzOSsnnVf6r5h3w-FtksA_WhoZWRMOpT3nAX6cs0IoF0q3f-VmeOYcvkOt-0IeW3B41I4qdv-oPHPke44hJJEiCXPodwHXbF16iqY'
-          },
-          body: JSON.stringify({
-            email: email,
-            groups: ['bqo1mG']
-          })
-        });
-        const result = await res.json();
-        if (res.ok || result.data) {
-          document.getElementById('newsletterSuccess').style.display = 'block';
-          document.getElementById('newsletterEmail').value = '';
-          document.getElementById('newsletterPrivacy').checked = false;
-        } else {
-          alert('Errore durante l\'iscrizione. Riprova più tardi.');
-        }
-      } catch(e) {
-        alert('Errore di rete. Riprova più tardi.');
-      } finally {
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        btn.textContent = originalText;
-      }
-    }
 
     async function submitContatto() {
       const nome = document.getElementById('contactNome').value.trim();
@@ -833,5 +783,23 @@
     }
   </script>
 
+  <script>
+    (function (s, e, n, d, er) {
+      s['Sender'] = er;
+      s[er] = s[er] || function () {
+        (s[er].q = s[er].q || []).push(arguments)
+      }, s[er].l = 1 * new Date();
+      s[er].on = function(event, callback) {
+        s[er].listeners = s[er].listeners || {};
+        (s[er].listeners[event] = s[er].listeners[event] || []).push(callback);
+      };
+      var a = e.createElement(n),
+          m = e.getElementsByTagName(n)[0];
+      a.async = 1;
+      a.src = d;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://cdn.sender.net/accounts_resources/universal.js', 'sender');
+    sender('c9be58d87a1008')
+  </script>
 </body>
 </html>
