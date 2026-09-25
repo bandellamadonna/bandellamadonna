@@ -171,6 +171,23 @@
       main { padding: 7rem 1.2rem 4rem; }
       footer { flex-direction: column; text-align: center; }
     }
+
+    /* ── BACKSTAGE (area riservata alla band) ── */
+    .nav-links li.nav-backstage-item { padding-left: 1.4rem; border-left: 1px solid rgba(255,255,255,0.12); }
+    .nav-backstage { display: inline-flex; align-items: center; gap: 0.45em; }
+    .nav-backstage svg { width: 0.95em; height: 0.95em; flex-shrink: 0; }
+    .mobile-menu a.mobile-backstage {
+      display: inline-flex; align-items: center; gap: 0.4em;
+      color: var(--gray); font-size: 1.4rem;
+      padding-top: 1.6rem; border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .mobile-menu a.mobile-backstage svg { width: 0.75em; height: 0.75em; }
+    .nav-links a { white-space: nowrap; }
+    @media (min-width: 681px) and (max-width: 980px) {
+      .nav-links { gap: 1rem; }
+      .nav-links a { letter-spacing: 0.08em; font-size: 0.72rem; }
+      .nav-links li.nav-backstage-item { padding-left: 1rem; }
+    }
   </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GH895V4K3E"></script>
@@ -192,6 +209,7 @@
       <li><a href="fotovideo.html">Gallery</a></li>
       <li><a href="index.html#merch">Merch</a></li>
       <li><a href="index.html#contatti">Contatti</a></li>
+      <li class="nav-backstage-item"><a href="voto.html" class="nav-backstage" title="Area riservata alla band"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Backstage</a></li>
     </ul>
     <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
   </nav>
@@ -203,6 +221,7 @@
     <a href="fotovideo.html" onclick="closeMenu()">Gallery</a>
     <a href="index.html#merch" onclick="closeMenu()">Merch</a>
     <a href="index.html#contatti" onclick="closeMenu()">Contatti</a>
+    <a href="voto.html" class="mobile-backstage" onclick="closeMenu()"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="1"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Backstage</a>
   </div>
 
   <main>

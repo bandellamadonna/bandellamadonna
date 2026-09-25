@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="robots" content="noindex, nofollow"/>
 <title>BDM · Votazione Nuovi Pezzi</title>
+<link rel="icon" type="image/png" href="images/favicon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -45,6 +47,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(-
 .btn-danger{background:var(--red);color:#fff}
 .btn-danger:hover{background:#c44}
 .login-error{color:var(--red);font-size:0.8rem;margin-top:0.8rem;min-height:1.2em}
+.back-site{margin-top:1.8rem;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color 0.2s}
+.back-site:hover{color:var(--off-white)}
+.header-right{display:flex;align-items:center;gap:0.6rem}
 .login-box .btn-gold{width:100%;text-align:center}
 
 /* ── APP ── */
@@ -141,7 +146,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:1re
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-logo">BDM</div>
-  <div class="login-sub">Bandellamadonna · Votazione Nuovi Pezzi</div>
+  <div class="login-sub">Backstage · Votazione Nuovi Pezzi</div>
   <form class="login-box" id="login-form">
     <label for="inp-user">Email</label>
     <input type="email" id="inp-user" placeholder="la-tua@email.com" autocomplete="username" required/>
@@ -150,6 +155,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:1re
     <button class="btn btn-gold" id="login-btn" type="submit">Entra</button>
     <div class="login-error" id="login-error" role="alert"></div>
   </form>
+  <a href="index.html" class="back-site">← Torna al sito</a>
 </div>
 
 <!-- APP -->
@@ -159,7 +165,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:1re
       <span class="header-logo">BDM · Voto</span>
       <span class="header-user" id="header-user"></span>
     </div>
-    <button class="btn btn-outline" id="logout-btn" type="button" style="font-size:0.65rem;padding:0.5rem 1rem">Esci</button>
+    <div class="header-right">
+      <a href="index.html" class="btn btn-outline" style="font-size:0.65rem;padding:0.5rem 1rem;text-decoration:none">← Sito</a>
+      <button class="btn btn-outline" id="logout-btn" type="button" style="font-size:0.65rem;padding:0.5rem 1rem">Esci</button>
+    </div>
   </header>
 
   <div class="tabs" role="tablist">
