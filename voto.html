@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>BDM · Votazione Nuovi Pezzi</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  color-scheme:dark;
+  --black:#0d0d0d;
+  --card:#1a1a1a;
+  --border:rgba(255,255,255,0.08);
+  --off-white:#f0f0ee;
+  --gray:#8a8a86;
+  --gold:#c9a84c;
+  --gold-dim:#8a6f2e;
+  --green:#4caf7d;
+  --red:#e05252;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  background:var(--black);color:var(--off-white);
+  min-height:100vh;overflow-x:hidden;
+}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+[hidden]{display:none!important}
+
+/* ── LOGIN ── */
+#login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem 16px}
+.login-logo{font-size:1.6rem;letter-spacing:0.35em;font-weight:700;text-transform:uppercase;margin-bottom:0.4rem}
+.login-sub{font-size:0.72rem;letter-spacing:0.2em;color:var(--gray);text-transform:uppercase;margin-bottom:2.8rem;text-align:center}
+.login-box{background:var(--card);border:1px solid var(--border);padding:2.2rem 2rem;width:100%;max-width:360px}
+.login-box label{display:block;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-bottom:0.4rem}
+.login-box input{display:block;width:100%;background:#111;border:1px solid var(--border);color:var(--off-white);padding:0.7rem 0.9rem;font-size:1rem;outline:none;margin-bottom:1.2rem;font-family:inherit}
+.login-box input:focus{border-color:var(--gold)}
+.btn{display:inline-block;cursor:pointer;border:none;font-family:inherit;letter-spacing:0.12em;text-transform:uppercase;font-size:0.72rem;font-weight:600;padding:0.75rem 1.8rem;transition:all 0.2s}
+.btn-gold{background:var(--gold);color:#000}
+.btn-gold:hover{background:#d4b060}
+.btn-gold:disabled{background:var(--gold-dim);cursor:wait}
+.btn-outline{background:transparent;color:var(--off-white);border:1px solid var(--border)}
+.btn-outline:hover{border-color:rgba(255,255,255,0.4)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover{background:#c44}
+.login-error{color:var(--red);font-size:0.8rem;margin-top:0.8rem;min-height:1.2em}
+.login-box .btn-gold{width:100%;text-align:center}
+
+/* ── APP ── */
+#app{max-width:800px;margin:0 auto;padding:1.5rem 16px 4rem}
+header{display:flex;align-items:center;justify-content:space-between;padding:1rem 0 1.6rem;border-bottom:1px solid var(--border);margin-bottom:1.8rem;flex-wrap:wrap;gap:0.8rem}
+.header-left{display:flex;flex-direction:column;gap:0.2rem}
+.header-logo{font-size:1.1rem;letter-spacing:0.3em;font-weight:700;text-transform:uppercase}
+.header-user{font-size:0.72rem;color:var(--gray);letter-spacing:0.08em}
+
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:1.6rem;overflow-x:auto}
+.tab{padding:0.6rem 1.2rem;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;color:var(--gray);border:none;border-bottom:2px solid transparent;transition:all 0.2s;background:none;font-family:inherit;white-space:nowrap}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab:hover:not(.active){color:var(--off-white)}
+
+/* progress */
+.progress-section h3{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray);margin-bottom:1rem}
+.member-row{display:flex;align-items:center;gap:0.9rem;margin-bottom:0.7rem}
+.member-name{font-size:0.82rem;width:140px;flex-shrink:0}
+.progress-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--gold);border-radius:3px;transition:width 0.4s}
+.progress-pct{font-size:0.72rem;color:var(--gray);width:36px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
+.global-bar-wrap{margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid var(--border)}
+.global-label{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-bottom:0.5rem}
+.global-bar-outer{height:8px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden}
+.global-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),#e8c86a);border-radius:4px;transition:width 0.4s}
+.global-pct-label{font-size:0.8rem;color:var(--gold);margin-top:0.4rem;font-weight:600;font-variant-numeric:tabular-nums}
+.completion-badge{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;border:1px solid;font-weight:600;flex-shrink:0;font-variant-numeric:tabular-nums}
+.badge-done{color:var(--green);border-color:var(--green);background:rgba(76,175,125,0.1)}
+.badge-partial{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,0.07)}
+.badge-none{color:var(--gray);border-color:var(--border)}
+.refresh-note{font-size:0.68rem;color:var(--gray);margin-top:1.4rem}
+
+/* songs */
+.song-card{background:var(--card);border:1px solid var(--border);padding:1rem 1.1rem;margin-bottom:0.7rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.song-num{font-size:0.68rem;color:var(--gray);width:22px;flex-shrink:0;text-align:right;font-variant-numeric:tabular-nums}
+.song-info{flex:1;min-width:160px;display:flex;flex-direction:column;gap:0.15rem}
+.song-title{font-size:0.92rem}
+.song-title.done{color:var(--gray)}
+.song-artist{font-size:0.72rem;color:var(--gray)}
+.song-links{display:flex;gap:0.4rem;margin-top:0.35rem;flex-wrap:wrap}
+.song-link{font-size:0.6rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;text-decoration:none;padding:0.2rem 0.5rem;border:1px solid var(--border);color:var(--gray);transition:all 0.2s}
+.song-link.spotify:hover{color:#1ed760;border-color:#1ed760}
+.song-link.youtube:hover{color:#ff4e45;border-color:#ff4e45}
+.stars{display:flex;gap:0.3rem;flex-shrink:0}
+.star-btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;border:none;background:none;color:rgba(255,255,255,0.15);transition:color 0.15s,transform 0.1s;border-radius:50%}
+.star-btn:hover{color:var(--gold);transform:scale(1.15)}
+.star-btn.active{color:var(--gold)}
+.abstain-btn{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:1px solid var(--border);background:none;color:var(--gray);padding:0.3rem 0.6rem;transition:all 0.2s;font-family:inherit;flex-shrink:0}
+.abstain-btn:hover{border-color:rgba(255,255,255,0.3);color:var(--off-white)}
+.abstain-btn.active{background:rgba(255,255,255,0.07);color:var(--off-white);border-color:rgba(255,255,255,0.3)}
+.vote-status{font-size:0.68rem;color:var(--gray);flex-shrink:0;min-width:50px;text-align:right}
+.vote-status.voted{color:var(--green)}
+
+/* results */
+.result-card{background:var(--card);border:1px solid var(--border);padding:1rem 1.2rem;margin-bottom:0.7rem}
+.result-header{display:flex;align-items:flex-start;gap:0.8rem;margin-bottom:0.8rem;flex-wrap:wrap}
+.result-num{font-size:0.68rem;color:var(--gray);width:22px;text-align:right;flex-shrink:0;padding-top:0.2rem;font-variant-numeric:tabular-nums}
+.result-main{flex:1;min-width:150px}
+.result-title{font-size:0.92rem;font-weight:600}
+.result-artist{font-size:0.7rem;color:var(--gray);margin-top:0.1rem}
+.result-avg{font-size:1rem;font-weight:700;color:var(--gold);background:rgba(201,168,76,0.12);padding:0.2rem 0.6rem;flex-shrink:0;font-variant-numeric:tabular-nums}
+.result-avg.none{color:var(--gray);background:rgba(255,255,255,0.04)}
+.result-votes-row{display:flex;flex-wrap:wrap;gap:0.5rem}
+.vote-chip{font-size:0.7rem;padding:0.25rem 0.55rem;border:1px solid var(--border);background:rgba(255,255,255,0.04);display:flex;align-items:center;gap:0.3rem}
+.chip-name{color:var(--gray)}
+.chip-val{font-weight:600}
+.chip-val.abstain{color:var(--gray);font-style:italic}
+.chip-val.missing{color:rgba(255,255,255,0.2)}
+.locked-msg{text-align:center;padding:3rem 1rem;font-size:0.85rem;color:var(--gray);letter-spacing:0.05em;line-height:1.6}
+.lock-icon{font-size:2rem;margin-bottom:0.8rem}
+.reveal-section{margin-bottom:2rem;padding:1.2rem;border:1px solid rgba(201,168,76,0.25);background:rgba(201,168,76,0.04)}
+.reveal-section h3{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
+.reveal-section p{font-size:0.82rem;color:var(--gray);margin-bottom:1rem;line-height:1.5}
+.sort-bar{display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.sort-bar span{font-size:0.7rem;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase}
+.sort-btn{font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border:1px solid var(--border);background:none;color:var(--gray);padding:0.3rem 0.7rem;font-family:inherit;transition:all 0.2s}
+.sort-btn:hover,.sort-btn.active{border-color:var(--gold);color:var(--gold)}
+
+#save-indicator{position:fixed;bottom:1.2rem;right:1.2rem;background:var(--green);color:#000;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.5rem 1rem;opacity:0;transition:opacity 0.3s;font-weight:600;pointer-events:none}
+#save-indicator.show{opacity:1}
+.loader{text-align:center;padding:3rem;color:var(--gray);font-size:0.85rem;letter-spacing:0.1em}
+.error-banner{background:rgba(224,82,82,0.12);border:1px solid var(--red);color:var(--red);padding:0.8rem 1rem;font-size:0.82rem;margin-bottom:1rem;line-height:1.5}
+
+@media(max-width:520px){
+  .member-name{width:100px;font-size:0.76rem}
+  .song-card{gap:0.6rem}
+  .star-btn{width:30px;height:30px;font-size:1.05rem}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-logo">BDM</div>
+  <div class="login-sub">Bandellamadonna · Votazione Nuovi Pezzi</div>
+  <form class="login-box" id="login-form">
+    <label for="inp-user">Email</label>
+    <input type="email" id="inp-user" placeholder="la-tua@email.com" autocomplete="username" required/>
+    <label for="inp-pass">Password</label>
+    <input type="password" id="inp-pass" placeholder="••••••••••" autocomplete="current-password" required/>
+    <button class="btn btn-gold" id="login-btn" type="submit">Entra</button>
+    <div class="login-error" id="login-error" role="alert"></div>
+  </form>
+</div>
+
+<!-- APP -->
+<div id="app" hidden>
+  <header>
+    <div class="header-left">
+      <span class="header-logo">BDM · Voto</span>
+      <span class="header-user" id="header-user"></span>
+    </div>
+    <button class="btn btn-outline" id="logout-btn" type="button" style="font-size:0.65rem;padding:0.5rem 1rem">Esci</button>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" id="tab-vote" type="button" data-tab="vote">Il mio voto</button>
+    <button class="tab" id="tab-progress" type="button" data-tab="progress">Progressi</button>
+    <button class="tab" id="tab-results" type="button" data-tab="results">Risultati</button>
+  </div>
+
+  <div id="panel-vote">
+    <div id="vote-error" class="error-banner" role="alert" hidden></div>
+    <div id="song-list"></div>
+  </div>
+
+  <div id="panel-progress" hidden>
+    <div class="progress-section">
+      <h3>Stato per membro</h3>
+      <div id="member-progress-list"></div>
+      <div class="global-bar-wrap">
+        <div class="global-label">Completamento globale</div>
+        <div class="global-bar-outer"><div class="global-bar-fill" id="global-bar" style="width:0%"></div></div>
+        <div class="global-pct-label" id="global-pct-label">0%</div>
+      </div>
+      <p class="refresh-note">Si aggiorna da solo ogni 30 secondi.</p>
+    </div>
+  </div>
+
+  <div id="panel-results" hidden>
+    <div id="results-admin-section" hidden>
+      <div class="reveal-section">
+        <h3>Controllo Admin</h3>
+        <p id="reveal-desc"></p>
+        <button class="btn btn-gold" id="reveal-btn" type="button">Rivela i voti</button>
+      </div>
+    </div>
+    <div id="results-locked" class="locked-msg" hidden>
+      <div class="lock-icon">🔒</div>
+      <div>I risultati saranno visibili<br>quando Bandellamadonna decide di rivelarli.</div>
+    </div>
+    <div id="results-content" hidden>
+      <div class="sort-bar">
+        <span>Ordina:</span>
+        <button class="sort-btn active" id="sort-avg-btn" type="button">Media ↓</button>
+        <button class="sort-btn" id="sort-num-btn" type="button">Numero</button>
+      </div>
+      <div id="results-list"></div>
+    </div>
+  </div>
+</div>
+
+<div id="save-indicator" aria-live="polite">Salvato ✓</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+// Incolla qui l'URL della web app di Google Apps Script (finisce con /exec)
+const API_URL = 'https://script.google.com/macros/s/AKfycbzfgUtXqEsqT1WJbnZ0J7Wfbhu3Ic-VkFya-qn7XYZlpU8wK5cxXgrsCC2x0u0UK_Q3/exec';
+
+// Canzoni: aggiungi `spotify: 'https://open.spotify.com/track/...'` o
+// `youtube: 'https://youtu.be/...'` per un link esatto; senza, si apre la ricerca.
+// ATTENZIONE: i voti sono salvati per posizione, quindi non riordinare
+// né eliminare canzoni dopo che la votazione è partita (aggiungerne in fondo va bene).
+const SONGS = [
+  { title: "Lupin l'Incorreggibile Lupin", artist: "Enzo Draghi" },
+  { title: "Me Cago en el Amor", artist: "Tonino Carotone" },
+  { title: "Che Cossè l'Amor", artist: "Vinicio Capossela" },
+  { title: "Quella di Rekki (quella con la pubblicità di Mondo Convenienza)", artist: "???" },
+  { title: "Time Bomb", artist: "Rancid" },
+  { title: "All Wrong", artist: "Morphine" },
+  { title: "Obsessed with You", artist: "X-Ray Spex" },
+  { title: "What You See Is What You Get", artist: "Roy Paci, Aretuska" },
+  { title: "Terzo Mondo", artist: "Punkreas" },
+  { title: "Sosta", artist: "Punkreas" },
+  { title: "Canapa", artist: "Punkreas" },
+  { title: "Little Green Bag", artist: "George Baker Selection" },
+  { title: "The Dope Show", artist: "Marilyn Manson" },
+  { title: "Ok il Prezzo è Giusto", artist: "???" },
+  { title: "Sotto Esame", artist: "Punkreas" },
+  { title: "You Never Can Tell", artist: "Chuck Berry" },
+  { title: "Superstition", artist: "Stevie Wonder" },
+  { title: "Iron Lion Zion", artist: "Bob Marley & The Wailers" },
+  { title: "Yettaboom", artist: "Roy Paci, Aretuska" },
+  { title: "Con un Deca", artist: "883" },
+  { title: "Mala Vida", artist: "Mano Negra" },
+];
+
+const STORAGE_KEY = 'bdm_voto_login';
+const POLL_MS = 30000;
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let me = null;             // { email, pass, name, isAdmin }
+let members = [];          // [{ email, name, short }] dal server
+let myVotes = {};          // voti mostrati (anche non ancora confermati)
+let confirmedVotes = {};   // ultimo stato confermato dal server
+let progress = {};         // { email: numero voti }
+let allVotes = null;       // { email: {...} } solo per admin o dopo rivelazione
+let revealed = false;
+let sortMode = 'avg';
+let currentTab = 'vote';
+
+const $ = (id) => document.getElementById(id);
+
+// ── API ───────────────────────────────────────────────────────────────────────
+async function api(action, extra = {}, creds = me) {
+  let res, data;
+  try {
+    // Nessun header custom: così è una "simple request" e Google la accetta senza preflight
+    res = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action, email: creds.email, password: creds.pass, ...extra }),
+    });
+    data = await res.json();
+  } catch (e) {
+    throw { code: 'network' };
+  }
+  if (!data.ok) throw { code: data.error || 'server' };
+  return data;
+}
+
+// ── STORAGE (login ricordato) ────────────────────────────────────────────────
+function saveLogin(creds) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(creds)); } catch (e) {} }
+function loadLogin() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (e) { return null; } }
+function clearLogin() { try { localStorage.removeItem(STORAGE_KEY); } catch (e) {} }
+
+// ── LOGIN ─────────────────────────────────────────────────────────────────────
+$('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const creds = { email: $('inp-user').value.trim().toLowerCase(), pass: $('inp-pass').value };
+  await tryLogin(creds, false);
+});
+
+async function tryLogin(creds, silent) {
+  const btn = $('login-btn'), err = $('login-error');
+  err.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Accesso…';
+  try {
+    const data = await api('login', {}, creds);
+    saveLogin(creds);
+    me = { ...creds, name: data.name, isAdmin: data.isAdmin };
+    members = data.members;
+    myVotes = { ...data.myVotes };
+    confirmedVotes = { ...data.myVotes };
+    applyStatus(data);
+    showApp();
+  } catch (e) {
+    if (e.code === 'auth') {
+      clearLogin();
+      err.textContent = 'Email o password errati.';
+    } else {
+      err.textContent = 'Non riesco a contattare il server. Controlla la connessione e riprova.';
+    }
+    if (silent) $('inp-user').value = creds.email || '';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Entra';
+  }
+}
+
+$('logout-btn').addEventListener('click', () => {
+  clearLogin();
+  me = null; myVotes = {}; confirmedVotes = {}; allVotes = null; progress = {};
+  $('app').hidden = true;
+  $('login-screen').hidden = false;
+  $('inp-pass').value = '';
+  $('vote-error').hidden = true;
+});
+
+function showApp() {
+  $('login-screen').hidden = true;
+  $('app').hidden = false;
+  $('header-user').textContent = me.name + (me.isAdmin ? ' · Admin' : '');
+  if (me.isAdmin) {
+    $('tab-vote').hidden = true;
+    showTab('results');
+  } else {
+    $('tab-vote').hidden = false;
+    renderSongList();
+    showTab('vote');
+  }
+}
+
+// ── STATUS (progressi / risultati) ───────────────────────────────────────────
+function applyStatus(d) {
+  revealed = !!d.revealed;
+  progress = d.progress || {};
+  allVotes = d.votes || null;
+  if (currentTab === 'progress') renderProgressTab();
+  if (currentTab === 'results') renderResultsTab();
+}
+
+async function refreshStatus() {
+  if (!me) return;
+  try { applyStatus(await api('status')); } catch (e) { /* riprova al prossimo giro */ }
+}
+
+setInterval(() => {
+  if (me && document.visibilityState === 'visible' && currentTab !== 'vote') refreshStatus();
+}, POLL_MS);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && me && currentTab !== 'vote') refreshStatus();
+});
+
+// ── SALVATAGGIO ───────────────────────────────────────────────────────────────
+// Un salvataggio alla volta; se clicchi più volte di fila, parte l'ultimo stato.
+let saving = false, pending = false;
+function queueSave() {
+  pending = true;
+  if (!saving) flushSaves();
+}
+async function flushSaves() {
+  saving = true;
+  while (pending) {
+    pending = false;
+    const snapshot = { ...myVotes };
+    try {
+      const d = await api('save', { votes: snapshot });
+      confirmedVotes = { ...d.myVotes };
+      progress[me.email] = Object.keys(confirmedVotes).length;
+      $('vote-error').hidden = true;
+      showSaved();
+    } catch (e) {
+      if (e.code === 'auth') { $('logout-btn').click(); return; }
+      if (!pending) {
+        myVotes = { ...confirmedVotes };
+        updateSongStatuses();
+      }
+      showSaveError(e);
+    }
+  }
+  saving = false;
+}
+
+function showSaveError(e) {
+  const el = $('vote-error');
+  el.textContent = e.code === 'network'
+    ? 'Voto NON salvato: connessione assente o lenta. Riprova tra qualche secondo.'
+    : 'Voto NON salvato: errore del server. Riprova; se continua avvisa Mirco.';
+  el.hidden = false;
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+window.addEventListener('beforeunload', (e) => {
+  if (saving || pending) { e.preventDefault(); e.returnValue = ''; }
+});
+
+let saveTimer = null;
+function showSaved() {
+  const el = $('save-indicator');
+  el.classList.add('show');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => el.classList.remove('show'), 1600);
+}
+
+// ── VOTO ──────────────────────────────────────────────────────────────────────
+function handleVote(idx, value) {
+  if (myVotes[idx] === value) delete myVotes[idx];
+  else myVotes[idx] = value;
+  updateSongStatuses();
+  queueSave();
+}
+
+function songLinks(song) {
+  const artist = song.artist && song.artist !== '???' ? ' ' + song.artist : '';
+  const q = encodeURIComponent(song.title + artist);
+  const wrap = document.createElement('div');
+  wrap.className = 'song-links';
+  [['spotify', 'Spotify', song.spotify || `https://open.spotify.com/search/${q}`],
+   ['youtube', 'YouTube', song.youtube || `https://www.youtube.com/results?search_query=${q}`]]
+    .forEach(([cls, label, href]) => {
+      const a = document.createElement('a');
+      a.className = 'song-link ' + cls;
+      a.textContent = label;
+      a.href = href;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      wrap.appendChild(a);
+    });
+  return wrap;
+}
+
+function renderSongList() {
+  const container = $('song-list');
+  container.innerHTML = '';
+  SONGS.forEach((song, idx) => {
+    const card = document.createElement('div');
+    card.className = 'song-card';
+
+    const num = document.createElement('span');
+    num.className = 'song-num';
+    num.textContent = idx + 1;
+
+    const info = document.createElement('div');
+    info.className = 'song-info';
+    const title = document.createElement('span');
+    title.className = 'song-title';
+    title.id = `song-title-${idx}`;
+    title.textContent = song.title;
+    const artist = document.createElement('span');
+    artist.className = 'song-artist';
+    artist.textContent = song.artist;
+    info.append(title, artist, songLinks(song));
+
+    const stars = document.createElement('div');
+    stars.className = 'stars';
+    stars.id = `stars-${idx}`;
+    for (let s = 1; s <= 5; s++) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'star-btn';
+      b.dataset.star = s;
+      b.setAttribute('aria-label', `${s} stell${s > 1 ? 'e' : 'a'}`);
+      b.textContent = '★';
+      b.addEventListener('click', () => handleVote(idx, s));
+      stars.appendChild(b);
+    }
+
+    const abst = document.createElement('button');
+    abst.type = 'button';
+    abst.className = 'abstain-btn';
+    abst.id = `abstain-${idx}`;
+    abst.textContent = 'Ast.';
+    abst.title = 'Mi astengo';
+    abst.addEventListener('click', () => handleVote(idx, 'abstain'));
+
+    const status = document.createElement('span');
+    status.className = 'vote-status';
+    status.id = `status-${idx}`;
+
+    card.append(num, info, stars, abst, status);
+    container.appendChild(card);
+  });
+  updateSongStatuses();
+}
+
+function updateSongStatuses() {
+  SONGS.forEach((_, idx) => {
+    const val = myVotes[idx];
+    const isVoted = val !== undefined;
+    const isAbstain = val === 'abstain';
+    const starVal = typeof val === 'number' ? val : 0;
+
+    const t = $(`song-title-${idx}`);
+    if (t) t.classList.toggle('done', isVoted);
+    const st = $(`stars-${idx}`);
+    if (st) st.querySelectorAll('.star-btn').forEach(b => b.classList.toggle('active', starVal >= Number(b.dataset.star)));
+    const ab = $(`abstain-${idx}`);
+    if (ab) ab.classList.toggle('active', isAbstain);
+    const s = $(`status-${idx}`);
+    if (s) {
+      s.classList.toggle('voted', isVoted);
+      s.textContent = isVoted ? (isAbstain ? 'Ast.' : '★'.repeat(starVal)) : '';
+    }
+  });
+}
+
+// ── PROGRESSI ─────────────────────────────────────────────────────────────────
+function renderProgressTab() {
+  const list = $('member-progress-list');
+  list.innerHTML = '';
+  let total = 0;
+  members.forEach(m => {
+    const count = Math.min(progress[m.email] || 0, SONGS.length);
+    total += count;
+    const pct = Math.round(count / SONGS.length * 100);
+
+    const row = document.createElement('div');
+    row.className = 'member-row';
+    const name = document.createElement('span');
+    name.className = 'member-name';
+    name.textContent = m.name;
+    const wrap = document.createElement('div');
+    wrap.className = 'progress-bar-wrap';
+    const fill = document.createElement('div');
+    fill.className = 'progress-bar-fill';
+    fill.style.width = pct + '%';
+    wrap.appendChild(fill);
+    const p = document.createElement('span');
+    p.className = 'progress-pct';
+    p.textContent = pct + '%';
+    const badge = document.createElement('span');
+    if (count === SONGS.length) { badge.className = 'completion-badge badge-done'; badge.textContent = 'Completo'; }
+    else if (count > 0)         { badge.className = 'completion-badge badge-partial'; badge.textContent = count + '/' + SONGS.length; }
+    else                        { badge.className = 'completion-badge badge-none'; badge.textContent = 'Nessuno'; }
+    row.append(name, wrap, p, badge);
+    list.appendChild(row);
+  });
+  const possible = members.length * SONGS.length;
+  const g = possible ? Math.round(total / possible * 100) : 0;
+  $('global-bar').style.width = g + '%';
+  $('global-pct-label').textContent = `${g}% (${total}/${possible} voti)`;
+}
+
+// ── RISULTATI ─────────────────────────────────────────────────────────────────
+function renderResultsTab() {
+  const admin = me && me.isAdmin;
+  $('results-admin-section').hidden = !admin;
+  if (admin) {
+    const btn = $('reveal-btn');
+    btn.textContent = revealed ? 'Nascondi i voti' : 'Rivela i voti';
+    btn.className = 'btn ' + (revealed ? 'btn-danger' : 'btn-gold');
+    $('reveal-desc').innerHTML = revealed
+      ? 'I voti sono <strong style="color:var(--green)">visibili</strong> a tutti i membri.'
+      : 'I voti sono <strong>nascosti</strong>. Solo tu (admin) vedi i risultati. Quando vuoi, rivelali a tutti.';
+  }
+  const canSee = !!allVotes;
+  $('results-locked').hidden = canSee;
+  $('results-content').hidden = !canSee;
+  if (!canSee) return;
+
+  const results = SONGS.map((song, idx) => {
+    let sum = 0, n = 0;
+    const mv = members.map(m => {
+      const val = (allVotes[m.email] || {})[idx];
+      if (typeof val === 'number') { sum += val; n++; }
+      return { name: m.short, val };
+    });
+    return { idx, song, avg: n ? sum / n : null, mv };
+  });
+  if (sortMode === 'avg') {
+    results.sort((a, b) => (a.avg === null) - (b.avg === null) || (b.avg ?? 0) - (a.avg ?? 0) || a.idx - b.idx);
+  }
+
+  const list = $('results-list');
+  list.innerHTML = '';
+  results.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'result-card';
+    const hdr = document.createElement('div');
+    hdr.className = 'result-header';
+    const num = document.createElement('span');
+    num.className = 'result-num';
+    num.textContent = r.idx + 1;
+    const main = document.createElement('div');
+    main.className = 'result-main';
+    const t = document.createElement('div');
+    t.className = 'result-title';
+    t.textContent = r.song.title;
+    const a = document.createElement('div');
+    a.className = 'result-artist';
+    a.textContent = r.song.artist;
+    main.append(t, a, songLinks(r.song));
+    const avg = document.createElement('span');
+    avg.className = 'result-avg' + (r.avg === null ? ' none' : '');
+    avg.textContent = r.avg === null ? '—' : '★ ' + r.avg.toFixed(2);
+    hdr.append(num, main, avg);
+
+    const row = document.createElement('div');
+    row.className = 'result-votes-row';
+    r.mv.forEach(v => {
+      const chip = document.createElement('div');
+      chip.className = 'vote-chip';
+      const n = document.createElement('span');
+      n.className = 'chip-name';
+      n.textContent = v.name + ':';
+      const val = document.createElement('span');
+      if (v.val === undefined)      { val.className = 'chip-val missing'; val.textContent = '–'; }
+      else if (v.val === 'abstain') { val.className = 'chip-val abstain'; val.textContent = 'Ast.'; }
+      else                          { val.className = 'chip-val'; val.textContent = '★' + v.val; }
+      chip.append(n, val);
+      row.appendChild(chip);
+    });
+    card.append(hdr, row);
+    list.appendChild(card);
+  });
+}
+
+$('reveal-btn').addEventListener('click', async () => {
+  const btn = $('reveal-btn');
+  btn.disabled = true;
+  try { applyStatus(await api('reveal', { revealed: !revealed })); }
+  catch (e) { $('reveal-desc').textContent = 'Operazione non riuscita. Controlla la connessione e riprova.'; }
+  finally { btn.disabled = false; }
+});
+
+$('sort-avg-btn').addEventListener('click', () => setSort('avg'));
+$('sort-num-btn').addEventListener('click', () => setSort('num'));
+function setSort(mode) {
+  sortMode = mode;
+  $('sort-avg-btn').classList.toggle('active', mode === 'avg');
+  $('sort-num-btn').classList.toggle('active', mode === 'num');
+  renderResultsTab();
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
+function showTab(tab) {
+  currentTab = tab;
+  ['vote', 'progress', 'results'].forEach(t => {
+    $('panel-' + t).hidden = t !== tab;
+    $('tab-' + t).classList.toggle('active', t === tab);
+  });
+  if (tab === 'progress') { renderProgressTab(); refreshStatus(); }
+  if (tab === 'results')  { renderResultsTab();  refreshStatus(); }
+}
+
+// ── AVVIO: login ricordato ───────────────────────────────────────────────────
+const saved = loadLogin();
+if (saved && saved.email && saved.pass) {
+  $('inp-user').value = saved.email;
+  tryLogin(saved, true);
+}
+</script>
+</body>
+</html>
