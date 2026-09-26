@@ -7,6 +7,10 @@
 <title>BDM · Votazione Nuovi Pezzi</title>
 <link rel="icon" type="image/png" href="images/favicon.png"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<script>
+  // Se c'è un login salvato, nasconde subito il modulo (niente "flash" del login al refresh)
+  try { if (localStorage.getItem('bdm_voto_login')) document.documentElement.classList.add('auto-login'); } catch (e) {}
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -29,6 +33,12 @@ body{
 }
 button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 [hidden]{display:none!important}
+
+/* ── AUTO-LOGIN ── */
+.auto-login #login-screen{display:none!important}
+.sync-pill{display:inline-flex;align-items:center;gap:0.45rem;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);margin-top:0.25rem}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:syncpulse 1s ease-in-out infinite}
+@keyframes syncpulse{0%,100%{opacity:0.25}50%{opacity:1}}
 
 /* ── LOGIN ── */
 #login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem 16px}
@@ -102,6 +112,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:1re
 .abstain-btn.active{background:rgba(255,255,255,0.07);color:var(--off-white);border-color:rgba(255,255,255,0.3)}
 .vote-status{font-size:0.68rem;color:var(--gray);flex-shrink:0;min-width:50px;text-align:right}
 .vote-status.voted{color:var(--green)}
+.vote-status.zero{color:var(--red)}
+.zero-btn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);background:none;color:var(--gray);font-size:0.72rem;font-weight:700;font-family:inherit;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-right:0.2rem;align-self:center;transition:all 0.15s}
+.zero-btn:hover{border-color:var(--red);color:var(--red)}
+.zero-btn.active{background:var(--red);border-color:var(--red);color:#fff}
 
 /* results */
 .result-card{background:var(--card);border:1px solid var(--border);padding:1rem 1.2rem;margin-bottom:0.7rem}
@@ -118,6 +132,21 @@ header{display:flex;align-items:center;justify-content:space-between;padding:1re
 .chip-val{font-weight:600}
 .chip-val.abstain{color:var(--gray);font-style:italic}
 .chip-val.missing{color:rgba(255,255,255,0.2)}
+.chip-val.zero{color:var(--red)}
+.validity{display:inline-block;margin-top:0.35rem;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;padding:0.15rem 0.5rem;border:1px solid}
+.validity.pending{color:var(--gold);border-color:var(--gold-dim)}
+.validity.invalid{color:var(--red);border-color:rgba(224,82,82,0.5)}
+.result-card.not-valid .result-title{color:var(--gray)}
+/* regolamento */
+.rules{max-width:520px;margin:2rem auto 0;text-align:left;background:var(--card);border:1px solid var(--border);padding:1.1rem 1.3rem;letter-spacing:normal}
+.rules h4{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.7rem}
+.rules ul{list-style:none;display:flex;flex-direction:column;gap:0.55rem}
+.rules li{font-size:0.8rem;line-height:1.5;color:var(--off-white);padding-left:1rem;position:relative}
+.rules li::before{content:'';position:absolute;left:0;top:0.55em;width:5px;height:5px;background:var(--gold-dim)}
+.rules li b{color:var(--gold);font-weight:600}
+details.rules-details{margin-bottom:1.2rem}
+details.rules-details summary{cursor:pointer;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray)}
+details.rules-details .rules{margin:0.8rem 0 0;max-width:none}
 .locked-msg{text-align:center;padding:3rem 1rem;font-size:0.85rem;color:var(--gray);letter-spacing:0.05em;line-height:1.6}
 .lock-icon{font-size:2rem;margin-bottom:0.8rem}
 .reveal-section{margin-bottom:2rem;padding:1.2rem;border:1px solid rgba(201,168,76,0.25);background:rgba(201,168,76,0.04)}
@@ -164,6 +193,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:1re
     <div class="header-left">
       <span class="header-logo">BDM · Voto</span>
       <span class="header-user" id="header-user"></span>
+      <span class="sync-pill" id="sync-pill" aria-live="polite" hidden><span class="sync-dot"></span><span id="sync-text">Aggiornamento…</span></span>
     </div>
     <div class="header-right">
       <a href="index.html" class="btn btn-outline" style="font-size:0.65rem;padding:0.5rem 1rem;text-decoration:none">← Sito</a>
@@ -206,8 +236,20 @@ header{display:flex;align-items:center;justify-content:space-between;padding:1re
     <div id="results-locked" class="locked-msg" hidden>
       <div class="lock-icon">🔒</div>
       <div>I risultati saranno visibili<br>quando Bandellamadonna decide di rivelarli.</div>
+      <div class="rules" id="rules-main">
+        <h4>Regolamento</h4>
+        <ul>
+          <li>Ogni membro dà a ogni canzone un voto da <b>0 a 5 stelle</b>, oppure si astiene con <b>Ast.</b></li>
+          <li><b>0 stelle</b> è un voto a tutti gli effetti: vale 0 e abbassa la media.</li>
+          <li>L'<b>astensione</b> non entra nella media.</li>
+          <li>Una canzone ha una valutazione valida solo con <b>almeno 3 voti</b> (da 0 a 5): quindi al massimo 3 astenuti su 6.</li>
+          <li>La classifica ordina le canzoni valide per media; quelle con meno di 3 voti restano <b>fuori classifica</b>.</li>
+          <li>I voti restano segreti finché Bandellamadonna non li rivela, e fino ad allora si possono cambiare.</li>
+        </ul>
+      </div>
     </div>
     <div id="results-content" hidden>
+      <details class="rules-details"><summary>Regolamento</summary><div id="rules-copy"></div></details>
       <div class="sort-bar">
         <span>Ordina:</span>
         <button class="sort-btn active" id="sort-avg-btn" type="button">Media ↓</button>
@@ -254,18 +296,26 @@ const SONGS = [
 ];
 
 const STORAGE_KEY = 'bdm_voto_login';
+const CACHE_KEY = 'bdm_voto_cache';
+const TAB_KEY = 'bdm_voto_tab';
+// Solo un suggerimento grafico per il primissimo avvio: i permessi li decide lo script Google
+const ADMIN_EMAIL_HINT = 'bandellamadonna@gmail.com';
 const POLL_MS = 30000;
+const MIN_VOTES = 3; // voti (0-5) necessari perché una canzone abbia una valutazione valida
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let me = null;             // { email, pass, name, isAdmin }
 let members = [];          // [{ email, name, short }] dal server
-let myVotes = {};          // voti mostrati (anche non ancora confermati)
+let myVotes = {};          // { idx: 0-5 | 'abstain' } voti mostrati (anche non ancora confermati)
 let confirmedVotes = {};   // ultimo stato confermato dal server
 let progress = {};         // { email: numero voti }
 let allVotes = null;       // { email: {...} } solo per admin o dopo rivelazione
 let revealed = false;
 let sortMode = 'avg';
 let currentTab = 'vote';
+let synced = false;        // true quando i dati di Google sono arrivati
+let unsynced = {};         // voti cliccati prima dell'aggiornamento: { idx: valore | null }
+let retryTimer = null;
 
 const $ = (id) => document.getElementById(id);
 
@@ -289,7 +339,37 @@ async function api(action, extra = {}, creds = me) {
 // ── STORAGE (login ricordato) ────────────────────────────────────────────────
 function saveLogin(creds) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(creds)); } catch (e) {} }
 function loadLogin() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (e) { return null; } }
-function clearLogin() { try { localStorage.removeItem(STORAGE_KEY); } catch (e) {} }
+function clearLogin() { try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(CACHE_KEY); } catch (e) {} }
+
+// Copia locale dell'ultima sessione: al refresh la pagina si apre subito da qui,
+// poi si allinea con Google in background.
+function saveCache() {
+  if (!me) return;
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({
+      email: me.email, name: me.name, isAdmin: me.isAdmin, members,
+      myVotes: confirmedVotes, progress, revealed,
+    }));
+  } catch (e) {}
+}
+function loadCache(email) {
+  try {
+    const c = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+    return c && c.email === email ? c : null;
+  } catch (e) { return null; }
+}
+
+function setSyncing(text) {
+  $('sync-pill').hidden = !text;
+  if (text) $('sync-text').textContent = text;
+}
+
+function showLoginScreen(message) {
+  document.documentElement.classList.remove('auto-login');
+  $('app').hidden = true;
+  $('login-screen').hidden = false;
+  $('login-error').textContent = message || '';
+}
 
 // ── LOGIN ─────────────────────────────────────────────────────────────────────
 $('login-form').addEventListener('submit', async (e) => {
@@ -303,21 +383,46 @@ async function tryLogin(creds, silent) {
   err.textContent = '';
   btn.disabled = true;
   btn.textContent = 'Accesso…';
+  clearTimeout(retryTimer);
   try {
     const data = await api('login', {}, creds);
     saveLogin(creds);
+    const wasOpen = !!me && !$('app').hidden;
+    const sameRole = wasOpen && me.isAdmin === data.isAdmin;
     me = { ...creds, name: data.name, isAdmin: data.isAdmin };
     members = data.members;
-    myVotes = { ...data.myVotes };
     confirmedVotes = { ...data.myVotes };
+    // base = voti su Google + eventuali voti cliccati durante l'aggiornamento
+    const base = { ...data.myVotes };
+    Object.keys(unsynced).forEach(k => { if (unsynced[k] === null) delete base[k]; else base[k] = unsynced[k]; });
+    const hadEdits = Object.keys(unsynced).length > 0;
+    unsynced = {};
+    myVotes = base;
+    synced = true;
+    setSyncing('');
+    $('vote-error').hidden = true;
     applyStatus(data);
-    showApp();
+    saveCache();
+    if (sameRole) {
+      $('header-user').textContent = me.name + (me.isAdmin ? ' · Admin' : '');
+      if (!me.isAdmin) updateSongStatuses();
+    } else {
+      showApp();
+    }
+    if (hadEdits || pending) queueSave();
   } catch (e) {
+    const appOpen = !!me && !$('app').hidden;
     if (e.code === 'auth') {
       clearLogin();
-      err.textContent = 'Email o password errati.';
+      me = null; synced = false; unsynced = {};
+      setSyncing('');
+      showLoginScreen('Email o password errati.');
+    } else if (appOpen) {
+      // la pagina resta com'è; riprova da sola tra 10 secondi
+      setSyncing('Offline · riprovo…');
+      retryTimer = setTimeout(() => tryLogin(creds, true), 10000);
     } else {
-      err.textContent = 'Non riesco a contattare il server. Controlla la connessione e riprova.';
+      showLoginScreen('Non riesco a contattare il server. Controlla la connessione e riprova.');
     }
     if (silent) $('inp-user').value = creds.email || '';
   } finally {
@@ -328,24 +433,30 @@ async function tryLogin(creds, silent) {
 
 $('logout-btn').addEventListener('click', () => {
   clearLogin();
+  clearTimeout(retryTimer);
+  try { sessionStorage.removeItem(TAB_KEY); } catch (e) {}
   me = null; myVotes = {}; confirmedVotes = {}; allVotes = null; progress = {};
-  $('app').hidden = true;
-  $('login-screen').hidden = false;
+  synced = false; unsynced = {};
+  setSyncing('');
+  showLoginScreen('');
   $('inp-pass').value = '';
   $('vote-error').hidden = true;
 });
 
 function showApp() {
+  document.documentElement.classList.remove('auto-login');
   $('login-screen').hidden = true;
   $('app').hidden = false;
-  $('header-user').textContent = me.name + (me.isAdmin ? ' · Admin' : '');
+  $('header-user').textContent = (me.name || me.email) + (me.isAdmin ? ' · Admin' : '');
+  let tab = currentTab;
+  try { tab = sessionStorage.getItem(TAB_KEY) || currentTab; } catch (e) {}
   if (me.isAdmin) {
     $('tab-vote').hidden = true;
-    showTab('results');
+    showTab(tab === 'vote' ? 'results' : tab);
   } else {
     $('tab-vote').hidden = false;
     renderSongList();
-    showTab('vote');
+    showTab(tab);
   }
 }
 
@@ -375,7 +486,7 @@ document.addEventListener('visibilitychange', () => {
 let saving = false, pending = false;
 function queueSave() {
   pending = true;
-  if (!saving) flushSaves();
+  if (!saving && synced) flushSaves(); // prima dell'aggiornamento il voto resta in attesa
 }
 async function flushSaves() {
   saving = true;
@@ -385,7 +496,11 @@ async function flushSaves() {
     try {
       const d = await api('save', { votes: snapshot });
       confirmedVotes = { ...d.myVotes };
+      const same = Object.keys(snapshot).length === Object.keys(d.myVotes).length &&
+        Object.keys(snapshot).every(k => d.myVotes[k] === snapshot[k]);
+      if (!same) throw { code: 'rejected' };
       progress[me.email] = Object.keys(confirmedVotes).length;
+      saveCache();
       $('vote-error').hidden = true;
       showSaved();
     } catch (e) {
@@ -404,7 +519,9 @@ function showSaveError(e) {
   const el = $('vote-error');
   el.textContent = e.code === 'network'
     ? 'Voto NON salvato: connessione assente o lenta. Riprova tra qualche secondo.'
-    : 'Voto NON salvato: errore del server. Riprova; se continua avvisa Mirco.';
+    : e.code === 'rejected'
+      ? 'Voto NON salvato: il server non ha accettato questo voto. Avvisa Mirco (va aggiornato lo script Google).'
+      : 'Voto NON salvato: errore del server. Riprova; se continua avvisa Mirco.';
   el.hidden = false;
   el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
@@ -425,6 +542,7 @@ function showSaved() {
 function handleVote(idx, value) {
   if (myVotes[idx] === value) delete myVotes[idx];
   else myVotes[idx] = value;
+  if (!synced) unsynced[idx] = myVotes[idx] === undefined ? null : myVotes[idx];
   updateSongStatuses();
   queueSave();
 }
@@ -473,6 +591,14 @@ function renderSongList() {
     const stars = document.createElement('div');
     stars.className = 'stars';
     stars.id = `stars-${idx}`;
+    const zero = document.createElement('button');
+    zero.type = 'button';
+    zero.className = 'zero-btn';
+    zero.id = `zero-${idx}`;
+    zero.textContent = '0';
+    zero.setAttribute('aria-label', '0 stelle');
+    zero.addEventListener('click', () => handleVote(idx, 0));
+    stars.appendChild(zero);
     for (let s = 1; s <= 5; s++) {
       const b = document.createElement('button');
       b.type = 'button';
@@ -515,10 +641,13 @@ function updateSongStatuses() {
     if (st) st.querySelectorAll('.star-btn').forEach(b => b.classList.toggle('active', starVal >= Number(b.dataset.star)));
     const ab = $(`abstain-${idx}`);
     if (ab) ab.classList.toggle('active', isAbstain);
+    const z = $(`zero-${idx}`);
+    if (z) z.classList.toggle('active', val === 0);
     const s = $(`status-${idx}`);
     if (s) {
-      s.classList.toggle('voted', isVoted);
-      s.textContent = isVoted ? (isAbstain ? 'Ast.' : '★'.repeat(starVal)) : '';
+      s.classList.toggle('voted', isVoted && val !== 0);
+      s.classList.toggle('zero', val === 0);
+      s.textContent = !isVoted ? '' : isAbstain ? 'Ast.' : val === 0 ? '0 ★' : '★'.repeat(starVal);
     }
   });
 }
@@ -578,23 +707,28 @@ function renderResultsTab() {
   if (!canSee) return;
 
   const results = SONGS.map((song, idx) => {
-    let sum = 0, n = 0;
+    let sum = 0, n = 0, missing = 0;
     const mv = members.map(m => {
       const val = (allVotes[m.email] || {})[idx];
-      if (typeof val === 'number') { sum += val; n++; }
+      if (typeof val === 'number') { sum += val; n++; }   // 0 compreso
+      else if (val === undefined) missing++;               // non ha ancora votato
       return { name: m.short, val };
     });
-    return { idx, song, avg: n ? sum / n : null, mv };
+    const valid = n >= MIN_VOTES;
+    // "in attesa": non ancora valida, ma può diventarlo con i voti che mancano
+    const state = valid ? 'valid' : (n + missing >= MIN_VOTES ? 'pending' : 'invalid');
+    return { idx, song, avg: n ? sum / n : null, n, state, mv };
   });
   if (sortMode === 'avg') {
-    results.sort((a, b) => (a.avg === null) - (b.avg === null) || (b.avg ?? 0) - (a.avg ?? 0) || a.idx - b.idx);
+    results.sort((a, b) => (a.state !== 'valid') - (b.state !== 'valid') ||
+      (a.avg === null) - (b.avg === null) || (b.avg ?? 0) - (a.avg ?? 0) || a.idx - b.idx);
   }
 
   const list = $('results-list');
   list.innerHTML = '';
   results.forEach(r => {
     const card = document.createElement('div');
-    card.className = 'result-card';
+    card.className = 'result-card' + (r.state === 'valid' ? '' : ' not-valid');
     const hdr = document.createElement('div');
     hdr.className = 'result-header';
     const num = document.createElement('span');
@@ -608,9 +742,18 @@ function renderResultsTab() {
     const a = document.createElement('div');
     a.className = 'result-artist';
     a.textContent = r.song.artist;
-    main.append(t, a, songLinks(r.song));
+    main.append(t, a);
+    if (r.state !== 'valid') {
+      const v = document.createElement('span');
+      v.className = 'validity ' + r.state;
+      v.textContent = r.state === 'pending'
+        ? `In attesa · ${r.n}/${MIN_VOTES} voti`
+        : `Fuori classifica · solo ${r.n} vot${r.n === 1 ? 'o' : 'i'}`;
+      main.appendChild(v);
+    }
+    main.appendChild(songLinks(r.song));
     const avg = document.createElement('span');
-    avg.className = 'result-avg' + (r.avg === null ? ' none' : '');
+    avg.className = 'result-avg' + (r.state === 'valid' ? '' : ' none');
     avg.textContent = r.avg === null ? '—' : '★ ' + r.avg.toFixed(2);
     hdr.append(num, main, avg);
 
@@ -625,6 +768,7 @@ function renderResultsTab() {
       const val = document.createElement('span');
       if (v.val === undefined)      { val.className = 'chip-val missing'; val.textContent = '–'; }
       else if (v.val === 'abstain') { val.className = 'chip-val abstain'; val.textContent = 'Ast.'; }
+      else if (v.val === 0)         { val.className = 'chip-val zero'; val.textContent = '★0'; }
       else                          { val.className = 'chip-val'; val.textContent = '★' + v.val; }
       chip.append(n, val);
       row.appendChild(chip);
@@ -655,6 +799,7 @@ function setSort(mode) {
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => showTab(t.dataset.tab)));
 function showTab(tab) {
   currentTab = tab;
+  try { sessionStorage.setItem(TAB_KEY, tab); } catch (e) {}
   ['vote', 'progress', 'results'].forEach(t => {
     $('panel-' + t).hidden = t !== tab;
     $('tab-' + t).classList.toggle('active', t === tab);
@@ -663,11 +808,25 @@ function showTab(tab) {
   if (tab === 'results')  { renderResultsTab();  refreshStatus(); }
 }
 
+$('rules-copy').innerHTML = $('rules-main').outerHTML.replace('id="rules-main"', '');
+
 // ── AVVIO: login ricordato ───────────────────────────────────────────────────
 const saved = loadLogin();
 if (saved && saved.email && saved.pass) {
   $('inp-user').value = saved.email;
-  tryLogin(saved, true);
+  // apre subito la pagina: dall'ultima sessione salvata sul telefono, se c'è
+  const cache = loadCache(saved.email) || {};
+  me = { ...saved, name: cache.name || '', isAdmin: cache.isAdmin ?? (saved.email === ADMIN_EMAIL_HINT) };
+  members = cache.members || [];
+  myVotes = { ...(cache.myVotes || {}) };
+  confirmedVotes = { ...myVotes };
+  progress = cache.progress || {};
+  revealed = !!cache.revealed;
+  setSyncing('Aggiornamento…');
+  showApp();
+  tryLogin(saved, true); // e intanto si allinea con Google
+} else {
+  document.documentElement.classList.remove('auto-login');
 }
 </script>
 </body>
