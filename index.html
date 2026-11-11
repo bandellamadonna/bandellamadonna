@@ -229,6 +229,39 @@
     .mobile-br { display: none; }
     @media (max-width: 680px) { .mobile-br { display: block; } }
 
+
+    /* ── PROSSIMO LIVE ── */
+    .next-live {
+      margin-top: 2.6rem; text-align: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(13,13,13,0.6);
+      padding: 1.6rem 2rem 1.5rem;
+      max-width: min(90vw, 560px);
+      animation: fadeUp 1s ease both;
+    }
+    .next-live-kicker { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gray); margin-bottom: 0.6rem; }
+    .next-live-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; line-height: 1; letter-spacing: 0.05em; }
+    .next-live-meta { font-size: 0.85rem; color: #ccc; margin-top: 0.5rem; letter-spacing: 0.04em; }
+    .next-live-price { font-size: 0.78rem; color: var(--gray); margin-top: 0.9rem; line-height: 1.6; }
+    .next-live-price b { color: var(--off-white); font-weight: 600; }
+    .btn-ticket {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
+      margin-top: 1.1rem; padding: 0.85rem 2.2rem;
+      background: var(--off-white); color: var(--black);
+      text-decoration: none; font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      border: 1px solid var(--off-white); transition: all 0.2s;
+    }
+    .btn-ticket:hover { background: transparent; color: var(--off-white); }
+    .next-live-note { font-size: 0.65rem; color: #666; margin-top: 0.9rem; letter-spacing: 0.03em; }
+    .event-btn.ticket { background: var(--off-white); color: var(--black); border-color: var(--off-white); font-weight: 700; }
+    .event-btn.ticket:hover { background: transparent; color: var(--off-white); }
+    .event-info .event-extra { font-size: 0.72rem; color: var(--gray); margin-top: 0.25rem; }
+    @media (max-width: 700px) {
+      .next-live { padding: 1.3rem 1.2rem; margin-top: 2rem; }
+      .next-live-title { font-size: 2.1rem; }
+    }
+
     /* ── SEZIONI ── */
     .sec { position: relative; z-index: 1; }
 
@@ -593,6 +626,14 @@
     <div class="hero-content">
       <div style="display:flex;flex-direction:column;align-items:center;">
         <img src="images/Sticker_orizzontale.png" alt="Bandellamadonna" class="hero-banner" />
+        <div class="next-live" id="prossimo-live">
+          <p class="next-live-kicker">Prossimo live</p>
+          <p class="next-live-title">Live @ C.I.Q.</p>
+          <p class="next-live-meta">Sabato 19 dicembre 2026 · ore 20:00 (TBC) · Milano</p>
+          <p class="next-live-price"><b>5 €</b> alla porta · <b>5,40 €</b> online (include le commissioni di pagamento)</p>
+          <a href="https://buy.stripe.com/aFa7sE6dhdWBa5CgkF1oI00" target="_blank" rel="noopener" class="btn-ticket">Compra il biglietto</a>
+          <p class="next-live-note">Pagamento sicuro con carta, Apple Pay o Google Pay. Il tuo nome sarà in lista all'ingresso.<br>Biglietti non rimborsabili, salvo annullamento del concerto.</p>
+        </div>
         </div>
       </div>
     </div>
@@ -657,6 +698,16 @@
   <div class="sec" id="eventi">
     <div class="sec-inner">
       <p class="section-label">Eventi</p>
+
+      <div class="event-card futuro">
+        <div class="event-date">19<span>Dic 2026</span></div>
+        <div class="event-info">
+          <h3>Live @ C.I.Q.</h3>
+          <p>Milano, Lombardia · ore 20:00 (TBC)</p>
+          <p class="event-extra">5 € alla porta · 5,40 € online</p>
+        </div>
+        <a href="https://buy.stripe.com/aFa7sE6dhdWBa5CgkF1oI00" target="_blank" rel="noopener" class="event-btn ticket">Biglietti</a>
+      </div>
 
       <div class="event-card">
         <div class="event-date">12<span>Ago 2026</span></div>
